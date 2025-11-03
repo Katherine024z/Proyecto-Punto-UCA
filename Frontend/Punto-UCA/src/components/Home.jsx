@@ -97,7 +97,7 @@ const Home = () => {
             onInput={handleSearch}
           />
 
-          <CardGroup>
+        <div className="eventos">
             {filtrados.map((e, index) => (
               <Card key={index}>
                 <CardImg alt={e.titulo} src={e.imagen} top width="100%" />
@@ -111,7 +111,7 @@ const Home = () => {
                 </CardBody>
               </Card>
             ))}
-          </CardGroup>
+          </div>
         </div>
       </main>
 
