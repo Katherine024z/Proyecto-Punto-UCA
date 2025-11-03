@@ -6,43 +6,59 @@ import logoUCA from "../images/logo-web.jpeg";
 import EventCard from "./EventCard";
 
 const Home = () => {
-  const [eventos] = useState([
-    {
-      titulo: "Feria de Ciencia",
-      fecha: "2025-11-05",
-      descripcion: "Exposición de proyectos estudiantiles.",
-      imagen: "/img/evento1.jpg" // Ajusta ruta a public/img
-    },
-    {
-      titulo: "Concierto Universitario",
-      fecha: "2025-11-15",
-      descripcion: "Banda sinfónica de la UCA en vivo.",
-      imagen: "/img/evento2.jpg"
-    },
-    {
-      titulo: "Hackathon UCA",
-      fecha: "2025-11-20",
-      descripcion: "Competencia de desarrollo tecnológico.",
-      imagen: "/img/evento3.jpg"
-    },
-    {
-      titulo: "Taller de Liderazgo",
-      fecha: "2025-12-01",
-      descripcion: "Formación para jóvenes líderes.",
-      imagen: "/img/evento4.jpg"
-    }
-  ]);
-  const [filtrados, setFiltrados] = useState(eventos);
+  const [eventos, setEventos] = useState([]);
+  const [filtrados, setFiltrados] = useState([]);
+  const [cargando, setCarga] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setFiltrados(eventos);
-  }, [eventos]);
+    async function fetchEventos() {
+    try{
+      const respuesta = await fetch('http://localhost:4000/eventos');
+
+      if (!respuesta.ok) {
+        throw new Error(`Error HTTP: ${respuesta.status}`);
+      }
+
+      const datos = await respuesta.json();
+
+      setEventos(datos);
+      setFiltrados(datos);
+    } catch (err) {
+      console.error("Fallo al obtener eventos: ", err);
+      setError("No se pudieron cargar los eventos. " + err.message);
+    } finally {
+      setCarga(false);
+    }
+  }
+    fetchEventos();
+}, []);
 
   const handleSearch = (e) => {
     const texto = e.target.value.toLowerCase();
-    const filtrados = eventos.filter(ev => ev.titulo.toLowerCase().includes(texto));
+    const filtrados = eventos.filter(ev => ev.nombre.toLowerCase().includes(texto));
     setFiltrados(filtrados);
   };
+
+  if (cargando) {
+        return (
+          <>
+            <main>
+                <h2 className="text-info">Cargando eventos...</h2>
+            </main>
+          </>
+        );
+    }
+
+    if (error) {
+        return (
+          <>
+            <main>
+                <h2 className="text-danger"> Error: {error}</h2>
+            </main>
+          </>
+        );
+    }
 
   return (
     <>
