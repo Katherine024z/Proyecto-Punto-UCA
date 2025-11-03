@@ -19,48 +19,15 @@ import EventCard from "./EventCard";
 import CategoriasAside from "./CategoriasAside";
 
 const Home = () => {
-<<<<<<< HEAD
+  //variable de estado y funciones flechas
   const [eventos, setEventos] = useState([]);
   const [filtrados, setFiltrados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
-=======
-  //data
-  const [eventos] = useState([
-    {
-      titulo: "Feria de Ciencia",
-      fecha: "2025-11-05",
-      descripcion: "Exposición de proyectos estudiantiles.",
-      imagen: "/img/evento1.jpg",
-    },
-    {
-      titulo: "Concierto Universitario",
-      fecha: "2025-11-15",
-      descripcion: "Banda sinfónica de la UCA en vivo.",
-      imagen: "/img/evento2.jpg",
-    },
-    {
-      titulo: "Hackathon UCA",
-      fecha: "2025-11-20",
-      descripcion: "Competencia de desarrollo tecnológico.",
-      imagen: "/img/evento3.jpg",
-    },
-
-    {
-      titulo: "Taller de Liderazgo",
-      fecha: "2025-12-01",
-      descripcion: "Formación para jóvenes líderes.",
-      imagen: "/img/evento4.jpg",
-    },
-  ]);
-
-  //variable de estado y funciones flechas
-  const [filtrados, setFiltrados] = useState(eventos);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
->>>>>>> 09722d50e379f5b337d7f6e5d986b090e122a378
 
   useEffect(() => {
     async function fetchEventos() {
@@ -87,7 +54,6 @@ const Home = () => {
 
   const handleSearch = (e) => {
     const texto = e.target.value.toLowerCase();
-<<<<<<< HEAD
     const filtrados = eventos.filter(ev => ev.nombre.toLowerCase().includes(texto));
     setFiltrados(filtrados);
   };
@@ -112,14 +78,8 @@ const Home = () => {
         );
     }
 
-=======
-    const filtrados = eventos.filter((ev) =>
-      ev.titulo.toLowerCase().includes(texto)
-    );
-    setFiltrados(filtrados);
-  };
+
   //contenido html
->>>>>>> 09722d50e379f5b337d7f6e5d986b090e122a378
   return (
     <>
       <header>
