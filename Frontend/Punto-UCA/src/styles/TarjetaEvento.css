@@ -1,0 +1,19 @@
+.tarjeta-evento {
+    width: 325px !important;
+    min-width: 325px !important;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    background-color: white;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.informacion-btn {
+    background-color:#004aad;
+}
+
+/* Opcional: Estilo de la imagen */
+.tarjeta-evento .card-img-top {
+    height: 180px;
+    object-fit: cover;
+}

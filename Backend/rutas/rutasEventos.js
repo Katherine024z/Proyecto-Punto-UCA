@@ -13,7 +13,7 @@ router.get('/eventos', async (req, res) => {
             INNER JOIN Categoria c ON e.id_categoria = c.id
 			INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
 			WHERE er.estado = 'Pendiente'
-            ORDER BY e.fecha DESC;
+            ORDER BY e.fecha ASC;
             `);
         res.status(200).json(resultado.recordset);
     } catch (err) {

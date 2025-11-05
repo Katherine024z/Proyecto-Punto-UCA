@@ -122,7 +122,8 @@ main {
 /* --- DISTRIBUCION:MAIN:ASIDE:CONTENIDO  --- */
 .content-area {
   flex-grow: 1;
-  width: 0;
+  margin: 0 auto;
+  width: 100%;
 }
 
 /* --- BÚSQUEDA --- */
@@ -176,4 +177,13 @@ footer {
   text-align: center;
   background-color: #004aad;
   color: white;
+}
+
+.grupo-tarjetas {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 20px; 
+    justify-content:center;
+    width: 100%;
+    margin-top: 20px;
 }

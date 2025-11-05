@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { CardGroup } from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  CardImg,
-  Button,
-  CardGroup,
-} from "reactstrap";
 //importar imagenes
 import logoUCA from "../images/logo-web.jpeg";
 import bannerImagen from "../images/evento1.png";
 //importar componentes
-import EventCard from "./EventCard";
+import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
 
 const Home = () => {
@@ -31,53 +22,54 @@ const Home = () => {
 
   useEffect(() => {
     async function fetchEventos() {
-    try{
-      const respuesta = await fetch('http://localhost:4000/eventos');
+      try {
+        const respuesta = await fetch("http://localhost:4000/eventos");
 
-      if (!respuesta.ok) {
-        throw new Error(`Error HTTP: ${respuesta.status}`);
+        if (!respuesta.ok) {
+          throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datos = await respuesta.json();
+
+        setEventos(datos);
+        setFiltrados(datos);
+      } catch (err) {
+        console.error("Fallo al obtener eventos: ", err);
+        setError("No se pudieron cargar los eventos. " + err.message);
+      } finally {
+        setCarga(false);
       }
-
-      const datos = await respuesta.json();
-
-      setEventos(datos);
-      setFiltrados(datos);
-    } catch (err) {
-      console.error("Fallo al obtener eventos: ", err);
-      setError("No se pudieron cargar los eventos. " + err.message);
-    } finally {
-      setCarga(false);
     }
-  }
     fetchEventos();
-}, []);
+  }, []);
 
   const handleSearch = (e) => {
     const texto = e.target.value.toLowerCase();
-    const filtrados = eventos.filter(ev => ev.nombre.toLowerCase().includes(texto));
+    const filtrados = eventos.filter((ev) =>
+      ev.nombre.toLowerCase().includes(texto)
+    );
     setFiltrados(filtrados);
   };
 
   if (cargando) {
-        return (
-          <>
-            <main>
-                <h2 className="text-info">Cargando eventos...</h2>
-            </main>
-          </>
-        );
-    }
+    return (
+      <>
+        <main>
+          <h2 className="text-info">Cargando eventos...</h2>
+        </main>
+      </>
+    );
+  }
 
-    if (error) {
-        return (
-          <>
-            <main>
-                <h2 className="text-danger"> Error: {error}</h2>
-            </main>
-          </>
-        );
-    }
-
+  if (error) {
+    return (
+      <>
+        <main>
+          <h2 className="text-danger"> Error: {error}</h2>
+        </main>
+      </>
+    );
+  }
 
   //contenido html
   return (
@@ -110,21 +102,11 @@ const Home = () => {
             onInput={handleSearch}
           />
 
-        <div className="eventos">
+          <CardGroup className = "grupo-tarjetas">
             {filtrados.map((e, index) => (
-              <Card key={index}>
-                <CardImg alt={e.titulo} src={e.imagen} top width="100%" />
-                <CardBody>
-                  <CardTitle tag="h5">{e.titulo}</CardTitle>
-                  <CardSubtitle className="mb-2 text-muted" tag="h6">
-                    Fecha: {e.fecha}
-                  </CardSubtitle>
-                  <CardText>{e.descripcion}</CardText>
-                  <Button color="primary">Ver más</Button>
-                </CardBody>
-              </Card>
+              <TarjetaEvento key={index} {...e} />
             ))}
-          </div>
+          </CardGroup>
         </div>
       </main>
 
