@@ -14,33 +14,15 @@ function CategoriasAside({ isVisible, toggleSidebar }) {
       <div className="contenido-lateral">
         <h3>Categorías</h3>
         <ul>
-          <li>
-            <link href="#">Académicos</link>
-          </li>
-          <li>
-            <link href="#">Deportivos</link>
-          </li>
-          <li>
-            <link href="#">Culturales</link>
-          </li>
-          <li>
-            <link href="#">Sociales</link>
-          </li>
-          <li>
-            <link href="#">Tecnológicos</link>
-          </li>
-          <li>
-            <link href="#">Salud y Bienestar </link>
-          </li>
-          <li>
-            <link href="#">Emprendimientos</link>
-          </li>
-          <li>
-            <link href="#">Desarrollo profesional</link>
-          </li>
-          <li>
-            <link href="#">Religiosos</link>
-          </li>
+          <li><Link to="/eventos/categoria/Académicos">Académicos</Link></li>
+          <li><Link to="/eventos/categoria/Deportivos">Deportivos</Link></li>
+          <li><Link to="/eventos/categoria/Culturales">Culturales</Link></li>
+          <li><Link to="/eventos/categoria/Sociales">Sociales</Link></li>
+          <li><Link to="/eventos/categoria/Tecnológicos">Tecnológicos</Link></li>
+          <li><Link to="/eventos/categoria/Salud y Bienestar">Salud y Bienestar</Link></li>
+          <li><Link to="/eventos/categoria/Emprendimientos">Emprendimientos</Link></li>
+          <li><Link to="/eventos/categoria/Desarrollo profesional">Desarrollo profesional</Link></li>
+          <li><Link to="/eventos/categoria/Religiosos">Religiosos</Link></li>
         </ul>
       </div>
     </aside>
