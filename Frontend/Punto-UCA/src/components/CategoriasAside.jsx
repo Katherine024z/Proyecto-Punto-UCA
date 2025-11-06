@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function CategoriasAside({ isVisible, toggleSidebar }) {
   return (
@@ -14,31 +15,31 @@ function CategoriasAside({ isVisible, toggleSidebar }) {
         <h3>Categorías</h3>
         <ul>
           <li>
-            <a href="#">Académicos</a>
+            <link href="#">Académicos</link>
           </li>
           <li>
-            <a href="#">Deportivos</a>
+            <link href="#">Deportivos</link>
           </li>
           <li>
-            <a href="#">Culturales</a>
+            <link href="#">Culturales</link>
           </li>
           <li>
-            <a href="#">Sociales</a>
+            <link href="#">Sociales</link>
           </li>
           <li>
-            <a href="#">Tecnológicos</a>
+            <link href="#">Tecnológicos</link>
           </li>
           <li>
-            <a href="#">Salud y Bienestar </a>
+            <link href="#">Salud y Bienestar </link>
           </li>
           <li>
-            <a href="#">Emprendimientos</a>
+            <link href="#">Emprendimientos</link>
           </li>
           <li>
-            <a href="#">Desarrollo profesional</a>
+            <link href="#">Desarrollo profesional</link>
           </li>
           <li>
-            <a href="#">Religiosos</a>
+            <link href="#">Religiosos</link>
           </li>
         </ul>
       </div>

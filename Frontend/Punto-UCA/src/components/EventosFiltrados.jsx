@@ -1,0 +1,112 @@
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { CardGroup } from 'reactstrap';
+import "bootstrap/dist/css/bootstrap.min.css";
+//importar imagenes
+import logoUCA from "../images/logo-web.jpeg";
+import bannerImagen from "../images/evento1.png";
+//importar componentes
+import TarjetaEvento from "./TarjetaEvento";
+import CategoriasAside from "./CategoriasAside";
+
+const EventosFiltrados = () => {
+  //variable de estado y funciones flechas
+  const [eventos, setEventos] = useState([]);
+  const [filtrados, setFiltrados] = useState([]);
+  const [cargando, setCarga] = useState(true);
+  const [error, setError] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    async function fetchEventos() {
+      try {
+        const respuesta = await fetch("http://localhost:4000/eventos");
+
+        if (!respuesta.ok) {
+          throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datos = await respuesta.json();
+
+        setEventos(datos);
+        setFiltrados(datos);
+      } catch (err) {
+        console.error("Fallo al obtener eventos: ", err);
+        setError("No se pudieron cargar los eventos. " + err.message);
+      } finally {
+        setCarga(false);
+      }
+    }
+    fetchEventos();
+  }, []);
+
+  const handleSearch = (e) => {
+    const texto = e.target.value.toLowerCase();
+    const filtrados = eventos.filter((ev) =>
+      ev.nombre.toLowerCase().includes(texto)
+    );
+    setFiltrados(filtrados);
+  };
+
+  if (cargando) {
+    return (
+      <>
+        <main>
+          <h2 className="text-info">Cargando eventos...</h2>
+        </main>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <main>
+          <h2 className="text-danger"> Error: {error}</h2>
+        </main>
+      </>
+    );
+  }
+
+  //contenido html
+  return (
+    <>
+      <header>
+        <div className="logo">
+          <img src={logoUCA} alt="Logo UCA" />
+        </div>
+        <nav className="menu">
+          <Link to="/">Inicio</Link>
+          <Link to="/nuevo-evento">Proponer Evento</Link>
+          <Link to="/login">Iniciar Sesión</Link>
+        </nav>
+      </header>
+
+      <main>
+        <CategoriasAside
+          isVisible={isSidebarOpen}
+          toggleSidebar={toggleSidebar}
+        />
+        <div className="content-area">
+
+          <CardGroup className="grupo-tarjetas">
+            {filtrados.map((e, index) => (
+              <TarjetaEvento key={index} {...e} />
+            ))}
+          </CardGroup>
+        </div>
+      </main>
+
+      <footer>
+        <p>
+          &copy; 2025 Punto UCA - Universidad Centroamericana José Simeón Cañas
+        </p>
+      </footer>
+    </>
+  );
+};
+
+export default EventosFiltrados;
