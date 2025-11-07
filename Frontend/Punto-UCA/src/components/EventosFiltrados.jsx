@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom"
 import { CardGroup } from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar imagenes
-import logoUCA from "../images/logo-web.jpeg";
+import logoPuntoUca from "../images/logoPuntoUca.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
@@ -71,7 +71,7 @@ const EventosFiltrados = () => {
     <>
       <header>
         <div className="logo">
-          <img src={logoUCA} alt="Logo UCA" />
+          <img src={logoPuntoUca} alt="PuntoUCA" />
         </div>
         <nav className="menu">
           <Link to="/">Inicio</Link>

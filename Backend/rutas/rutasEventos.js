@@ -8,11 +8,12 @@ router.get('/eventos', async (req, res) => {
     try{
         const pool = req.db;
         const resultado = await pool.request().query(`
-            SELECT e.nombre, e.fecha, c.categoria
+            SELECT e.nombre, e.fecha, c.categoria, i.URL AS imagen
             FROM Evento e
             INNER JOIN Categoria c ON e.id_categoria = c.id
-			INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
-			WHERE er.estado = 'Pendiente'
+			      INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
+            INNER JOIN Imagen i on i.id_evento = e.id
+			      WHERE er.estado = 'Pendiente'
             ORDER BY e.fecha ASC;
             `);
         res.status(200).json(resultado.recordset);
