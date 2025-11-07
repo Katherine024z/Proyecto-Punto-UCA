@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CardGroup } from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar imagenes
-import logoUCA from "../images/logo-web.jpeg";
+import logoPuntoUca from "../images/logoPuntoUca.png";
 import bannerImagen from "../images/evento1.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
@@ -75,7 +75,7 @@ const Home = () => {
     <>
       <header>
         <div className="logo">
-          <img src={logoUCA} alt="Logo UCA" />
+          <img src={logoPuntoUca} alt="PuntoUca" />
         </div>
         <nav className="menu">
           <Link to="/">Inicio</Link>
