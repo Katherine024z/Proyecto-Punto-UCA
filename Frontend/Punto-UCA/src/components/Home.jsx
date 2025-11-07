@@ -32,6 +32,7 @@ const Home = () => {
         const datos = await respuesta.json();
 
         setEventos(datos);
+        setFiltrados(datos);
       } catch (err) {
         console.error("Fallo al obtener eventos: ", err);
         setError("No se pudieron cargar los eventos. " + err.message);
@@ -102,7 +103,7 @@ const Home = () => {
           />
 
           <CardGroup className = "grupo-tarjetas">
-            {eventos.map((e, index) => (
+            {filtrados.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
           </CardGroup>
@@ -119,3 +120,4 @@ const Home = () => {
 };
 
 export default Home;
+
