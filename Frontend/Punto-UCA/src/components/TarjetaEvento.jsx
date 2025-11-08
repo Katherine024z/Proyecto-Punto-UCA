@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import '../styles/TarjetaEvento.css'
 
-const EventCard = ({ nombre, fecha, categoria, descripcion, imagen }) => {
+const EventCard = ({ nombre, fecha, categoria, descripcion, imagen}) => {
   const fechaOriginal = fecha ? new Date(fecha) : null;
   const fechaFormateada = fechaOriginal
     ? fechaOriginal.toLocaleDateString("es-ES", {

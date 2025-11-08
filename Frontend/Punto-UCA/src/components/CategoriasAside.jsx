@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 
 function CategoriasAside({ isVisible, toggleSidebar }) {
   return (
@@ -13,33 +14,15 @@ function CategoriasAside({ isVisible, toggleSidebar }) {
       <div className="contenido-lateral">
         <h3>Categorías</h3>
         <ul>
-          <li>
-            <a href="#">Académicos</a>
-          </li>
-          <li>
-            <a href="#">Deportivos</a>
-          </li>
-          <li>
-            <a href="#">Culturales</a>
-          </li>
-          <li>
-            <a href="#">Sociales</a>
-          </li>
-          <li>
-            <a href="#">Tecnológicos</a>
-          </li>
-          <li>
-            <a href="#">Salud y Bienestar </a>
-          </li>
-          <li>
-            <a href="#">Emprendimientos</a>
-          </li>
-          <li>
-            <a href="#">Desarrollo profesional</a>
-          </li>
-          <li>
-            <a href="#">Religiosos</a>
-          </li>
+          <li><Link to="/eventos/categoria/Académico">Académicos</Link></li>
+          <li><Link to="/eventos/categoria/Deportivo">Deportivos</Link></li>
+          <li><Link to="/eventos/categoria/Cultural">Culturales</Link></li>
+          <li><Link to="/eventos/categoria/Social">Sociales</Link></li>
+          <li><Link to="/eventos/categoria/Tecnológico">Tecnológicos</Link></li>
+          <li><Link to="/eventos/categoria/Salud y Bienestar">Salud y Bienestar</Link></li>
+          <li><Link to="/eventos/categoria/Emprendimiento">Emprendimientos</Link></li>
+          <li><Link to="/eventos/categoria/Desarrollo profesional">Desarrollo profesional</Link></li>
+          <li><Link to="/eventos/categoria/Religioso">Religiosos</Link></li>
         </ul>
       </div>
     </aside>
