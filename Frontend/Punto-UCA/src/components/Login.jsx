@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import LoginBoton from "./LoginBoton.jsx";
+import "../styles/LoginBoton.css";
 
 const Login = () => {
   const [usuario, setUsuario] = useState('');
@@ -27,7 +29,7 @@ const Login = () => {
           onChange={(e) => setClave(e.target.value)}
           required
         />
-        <button type="submit">Entrar</button>
+        <LoginBoton text="Entrar" />
       </form>
       <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
     </main>

@@ -81,7 +81,24 @@ const Home = () => {
         <nav className="menu">
           <Link to="/">Inicio</Link>
           <Link to="/nuevo-evento">Proponer Evento</Link>
-          <Link to="/login">Iniciar Sesión</Link>
+          {/* Uso de formato SVG para crear iconos*/}
+          <Link to="/login" className="login-icon-link">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              width="24"
+              height="24"
+            >
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span className="login-text">Iniciar sesión</span>
+          </Link>
         </nav>
       </header>
 
@@ -102,7 +119,7 @@ const Home = () => {
             onInput={handleSearch}
           />
 
-          <CardGroup className = "grupo-tarjetas">
+          <CardGroup className="grupo-tarjetas">
             {filtrados.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
