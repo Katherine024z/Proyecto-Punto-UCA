@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LoginBoton from "./LoginBoton.jsx";
-import "../styles/LoginBoton.css";
+import "../styles/IconoBoton.css";
 
 const Login = () => {
   const [usuario, setUsuario] = useState('');

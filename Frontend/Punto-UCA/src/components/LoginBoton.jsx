@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/LoginBoton.css";
+import "../styles/IconoBoton.css";
 
 //Al confirmar el inicio de sesion, el boton dira "Entrar"
 export default function LoginBoton({ text = "Entrar" }) {
