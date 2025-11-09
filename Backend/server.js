@@ -1,17 +1,15 @@
 import express from 'express';
 import cors from 'cors';
-import { initializeDb} from './db/dbConfig.js';
-import rutasEventos from './rutas/rutasEventos.js';
+import { initializeDb } from './db/dbConfig.js';
+import rutas from './rutas/rutas.js';
 
 const app = express();
+const PORT = 4000;
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'http://127.0.0.1:5173']
+    origin: 'http://localhost:5173'
 }));
-
 app.use(express.json());
-
-const PORT = 4000;
 
 initializeDb()
   .then((pool) => {
@@ -22,7 +20,7 @@ initializeDb()
       next();
     });
 
-    app.use('/', rutasEventos);
+    app.use('/', rutas);
 
     app.use((req, res, next) => {
       res.status(404).json({ mensaje: 'Ruta no encontrada'});
