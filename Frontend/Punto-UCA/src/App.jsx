@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/Login';
-import NuevoEvento from './components/NuevoEvento';
-import EventosFiltrados from './components/EventosFiltrados';
+import Home from './componentes/Home';
+import Login from './componentes/Login';
+import NuevoEvento from './componentes/NuevoEvento';
+import EventosFiltrados from './componentes/EventosFiltrados';
 import './styles/layout.css'; 
 
 function App() {

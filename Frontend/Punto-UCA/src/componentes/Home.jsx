@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CardGroup } from 'reactstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar imagenes
 import logoPuntoUca from "../images/logoPuntoUca.png";
@@ -8,6 +7,7 @@ import bannerImagen from "../images/evento1.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
+import PaginacionEventos from "./PaginacionEventos"
 
 const Home = () => {
   //variable de estado y funciones flechas
@@ -15,7 +15,12 @@ const Home = () => {
   const [filtrados, setFiltrados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
+  const [paginaActual, setPaginaActual] = useState(1);
+  const [totalPaginas, setTotalPaginas] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const eventosPagina = 15;
+
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
@@ -23,7 +28,7 @@ const Home = () => {
   useEffect(() => {
     async function fetchEventos() {
       try {
-        const respuesta = await fetch("http://localhost:4000/eventos");
+        const respuesta = await fetch(`http://localhost:4000/eventos?pagina=${paginaActual}`);
 
         if (!respuesta.ok) {
           throw new Error(`Error HTTP: ${respuesta.status}`);
@@ -31,8 +36,9 @@ const Home = () => {
 
         const datos = await respuesta.json();
 
-        setEventos(datos);
-        setFiltrados(datos);
+        setEventos(datos.eventos);
+        setFiltrados(datos.eventos);
+        setTotalPaginas(Math.ceil(datos.totalEventos / eventosPagina))
       } catch (err) {
         console.error("Fallo al obtener eventos: ", err);
         setError("No se pudieron cargar los eventos. " + err.message);
@@ -41,7 +47,13 @@ const Home = () => {
       }
     }
     fetchEventos();
-  }, []);
+  }, [paginaActual]);
+
+  const manejarCambioPagina = (nuevaPagina) => {
+    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
+      setPaginaActual(nuevaPagina);
+    }
+  };
 
   const handleSearch = (e) => {
     const texto = e.target.value.toLowerCase();
@@ -79,7 +91,6 @@ const Home = () => {
           <img src={logoPuntoUca} alt="PuntoUca" />
         </div>
         <nav className="menu">
-          {/* Uso de formato SVG para crear iconos*/}
           <Link to="/" className="login-icon-link">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +103,6 @@ const Home = () => {
               width="24"
               height="24"
             >
-              {/* Uso de lineas y curvas para formar el icono*/}
               <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
@@ -155,11 +165,16 @@ const Home = () => {
             onInput={handleSearch}
           />
 
-          <CardGroup className="grupo-tarjetas">
+          <div className="grupo-tarjetas">
             {filtrados.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
-          </CardGroup>
+          </div>
+          <PaginacionEventos
+            pagActual = {paginaActual}
+            totalPag = {totalPaginas}
+            cambiarPag = {manejarCambioPagina}
+          />
         </div>
       </main>
 
