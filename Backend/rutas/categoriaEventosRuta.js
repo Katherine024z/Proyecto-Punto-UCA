@@ -5,11 +5,13 @@ const getEventosPorCategoria = async (req, res) => {
     const { nombreCategoria } = req.params;
 
     const consulta = `
-    SELECT e.nombre, e.fecha, c.categoria FROM Evento E
-    JOIN Categoria C ON E.id_categoria = C.id
-    WHERE C.categoria = @categoria
+    SELECT e.nombre, e.fecha, c.categoria, i.URL AS imagen FROM Evento e
+    INNER JOIN Categoria c ON e.id_categoria = C.id
+		INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
+    INNER JOIN Imagen i on i.id_evento = e.id
+    WHERE c.categoria = @categoria and er.estado = 'Pendiente'
     ORDER BY e.fecha ASC`;
-      
+    
     const pool = req.db;
     const resultado = await pool
       .request()

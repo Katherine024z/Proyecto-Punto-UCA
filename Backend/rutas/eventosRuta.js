@@ -1,6 +1,6 @@
 import {sql} from '../db/dbConfig.js';
 
-const limite_pagina = 15;
+const limite_pagina = 12;
 const getEventos = async (req, res) => {
     try{
         const pagina = parseInt(req.query.pagina) || 1;

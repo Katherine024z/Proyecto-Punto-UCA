@@ -19,7 +19,7 @@ const Home = () => {
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const eventosPagina = 15;
+  const eventosPagina = 12;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -172,7 +172,7 @@ const Home = () => {
           </div>
           <PaginacionEventos
             pagActual = {paginaActual}
-            totalPag = {totalPaginas}
+            pagTotal = {totalPaginas}
             cambiarPag = {manejarCambioPagina}
           />
         </div>

@@ -87,11 +87,11 @@ const EventosFiltrados = () => {
         />
         <div className="content-area">
 
-          <CardGroup className="grupo-tarjetas">
+          <div className="grupo-tarjetas">
             {eventos.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
-          </CardGroup>
+          </div>
         </div>
       </main>
 
