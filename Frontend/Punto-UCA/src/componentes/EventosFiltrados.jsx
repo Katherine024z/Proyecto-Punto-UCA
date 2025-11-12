@@ -9,6 +9,7 @@ import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
 import PaginacionEventos from "./PaginacionEventos";
 import TotalEventosContador from "./TotalEventosContador";
+import Header from "./Header";
 
 const EventosFiltrados = () => {
   //variable de estado y funciones flechas
@@ -83,17 +84,7 @@ const EventosFiltrados = () => {
   //contenido html
   return (
     <>
-      <header>
-        <div className="logo">
-          <img src={logoPuntoUca} alt="PuntoUCA" />
-        </div>
-        <nav className="menu">
-          <Link to="/">Inicio</Link>
-          <Link to="/nuevo-evento">Proponer Evento</Link>
-          <Link to="/login">Iniciar Sesión</Link>
-        </nav>
-      </header>
-
+      <Header/>
       <main>
         <CategoriasAside
           isVisible={isSidebarOpen}
