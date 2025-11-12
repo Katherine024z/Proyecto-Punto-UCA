@@ -143,7 +143,10 @@ main {
   border-radius: 5px;
   font-size: 1em;
 }
-
+.conteo-eventos {
+  display: flex;
+  justify-content: right;
+}
 /* --- EVENTOS  --- */
 .grupo-tarjetas {
     display: flex;

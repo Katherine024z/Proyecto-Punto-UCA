@@ -3,9 +3,9 @@ import {sql} from '../db/dbConfig.js';
 const limite_pagina = 12;
 const getEventos = async (req, res) => {
     try{
+        const pool = req.db;
         const pagina = parseInt(req.query.pagina) || 1;
         const desplazamiento = (pagina - 1) * limite_pagina;
-        const pool = req.db;
 
         const conteo = `
             SELECT COUNT (*) AS total

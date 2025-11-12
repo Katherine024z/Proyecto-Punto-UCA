@@ -7,7 +7,8 @@ import bannerImagen from "../images/evento1.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
-import PaginacionEventos from "./PaginacionEventos"
+import PaginacionEventos from "./PaginacionEventos";
+import TotalEventosContador from "./TotalEventosContador";
 
 const Home = () => {
   //variable de estado y funciones flechas
@@ -17,6 +18,7 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(0);
+  const [conteoTotal, setConteoTotal] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const eventosPagina = 12;
@@ -38,7 +40,8 @@ const Home = () => {
 
         setEventos(datos.eventos);
         setFiltrados(datos.eventos);
-        setTotalPaginas(Math.ceil(datos.totalEventos / eventosPagina))
+        setTotalPaginas(Math.ceil(datos.totalEventos / eventosPagina));
+        setConteoTotal(datos.totalEventos);
       } catch (err) {
         console.error("Fallo al obtener eventos: ", err);
         setError("No se pudieron cargar los eventos. " + err.message);
@@ -164,7 +167,9 @@ const Home = () => {
             className="busqueda"
             onInput={handleSearch}
           />
-
+          <TotalEventosContador 
+              conteo={conteoTotal} 
+          />
           <div className="grupo-tarjetas">
             {filtrados.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
