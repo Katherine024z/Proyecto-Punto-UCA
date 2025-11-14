@@ -10,11 +10,13 @@ import CategoriasAside from "./CategoriasAside";
 import PaginacionEventos from "./PaginacionEventos";
 import TotalEventosContador from "./TotalEventosContador";
 import Header from "./Header";
+import ImagenesCarrusel from "./ImagenesCarrusel"
 
 const Home = () => {
   //variable de estado y funciones flechas
   const [eventos, setEventos] = useState([]);
   const [filtrados, setFiltrados] = useState([]);
+  const [destacados, setdestacados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
@@ -52,6 +54,28 @@ const Home = () => {
     }
     fetchEventos();
   }, [paginaActual]);
+
+    useEffect(() => {
+    async function fetchDestacados() {
+      try {
+
+        const respuesta = await fetch(`http://localhost:4000/eventos/destacados`);
+        
+        if (!respuesta.ok) {
+          throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datos = await respuesta.json();
+        
+        setdestacados(datos); 
+
+      } catch (err) {
+        console.error("Fallo al obtener eventos destacados: ", err);
+        
+      }
+    }
+    fetchDestacados();
+  }, []);
 
   const manejarCambioPagina = (nuevaPagina) => {
     if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
@@ -97,10 +121,7 @@ const Home = () => {
           toggleSidebar={toggleSidebar}
         />
         <div className="content-area">
-          <section className="banner">
-            <img src={bannerImagen} alt="Evento destacado" />
-          </section>
-
+          <ImagenesCarrusel destacados={destacados} />
           <input
             type="text"
             placeholder="Buscar evento..."
