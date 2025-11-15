@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import getEventos from './eventosRuta.js';
-import getEventosPorCategoria from './categoriaEventosRuta.js'; 
-import getEventosDestacados from './eventosDestacado.js';
-import buscarEventos from './busquedaRuta.js';
+import getEventos from '../controladores/eventosRuta.js';
+import getEventosPorCategoria from '../controladores/categoriaEventosRuta.js'; 
+import getEventosDestacados from '../controladores/eventosDestacado.js';
+import buscarEventos from '../controladores/busquedaRuta.js';
 
 const rutas = Router();
 

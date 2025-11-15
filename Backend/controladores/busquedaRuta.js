@@ -1,4 +1,4 @@
-import {sql} from '../db/dbConfig.js';
+import {sql} from '../data/dbConfig.js';
 
 const limite_pagina = 15;
 
