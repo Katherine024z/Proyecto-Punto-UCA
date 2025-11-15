@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar imagenes
-import logoPuntoUca from "../images/logoPuntoUca.png";
 import bannerImagen from "../images/evento1.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
@@ -14,24 +13,45 @@ import Header from "./Header";
 const Home = () => {
   //variable de estado y funciones flechas
   const [eventos, setEventos] = useState([]);
-  const [filtrados, setFiltrados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [conteoTotal, setConteoTotal] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [terminoBusqueda, setTerminoBusqueda] = useState("");
 
-  const eventosPagina = 12;
+  const EVENTOS_PAGINA = 12;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+  
+  const manejarCambioPagina = (nuevaPagina) => {
+    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
+      setPaginaActual(nuevaPagina);
+    }
+  };
+
+  const manejarNuevaBusqueda = (nuevoTermino) => {
+    setPaginaActual(1);
+    setTerminoBusqueda(nuevoTermino);
+  };
 
   useEffect(() => {
     async function fetchEventos() {
+    setCarga(true);
+    let url;
+    const base = "http://localhost:4000";
+
+    if (terminoBusqueda) {
+      url = `${base}/eventos/buscar?termino=${terminoBusqueda}&pagina=${paginaActual}`;
+    }
+    else{
+      url = `${base}/eventos?pagina=${paginaActual}`;
+    }
       try {
-        const respuesta = await fetch(`http://localhost:4000/eventos?pagina=${paginaActual}`);
+        const respuesta = await fetch(url);
 
         if (!respuesta.ok) {
           throw new Error(`Error HTTP: ${respuesta.status}`);
@@ -40,8 +60,7 @@ const Home = () => {
         const datos = await respuesta.json();
 
         setEventos(datos.eventos);
-        setFiltrados(datos.eventos);
-        setTotalPaginas(Math.ceil(datos.totalEventos / eventosPagina));
+        setTotalPaginas(Math.ceil(datos.totalEventos / EVENTOS_PAGINA));
         setConteoTotal(datos.totalEventos);
       } catch (err) {
         console.error("Fallo al obtener eventos: ", err);
@@ -51,21 +70,7 @@ const Home = () => {
       }
     }
     fetchEventos();
-  }, [paginaActual]);
-
-  const manejarCambioPagina = (nuevaPagina) => {
-    if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
-      setPaginaActual(nuevaPagina);
-    }
-  };
-
-  const handleSearch = (e) => {
-    const texto = e.target.value.toLowerCase();
-    const filtrados = eventos.filter((ev) =>
-      ev.nombre.toLowerCase().includes(texto)
-    );
-    setFiltrados(filtrados);
-  };
+  }, [paginaActual, terminoBusqueda]);
 
   if (cargando) {
     return (
@@ -90,28 +95,24 @@ const Home = () => {
   //contenido html
   return (
     <>
-      <Header/>
+      <Header
+      busqueda = {manejarNuevaBusqueda}
+      consulta = {terminoBusqueda}
+      />
       <main>
         <CategoriasAside
           isVisible={isSidebarOpen}
           toggleSidebar={toggleSidebar}
         />
-        <div className="content-area">
+        <div className="contenedor-principal">
           <section className="banner">
             <img src={bannerImagen} alt="Evento destacado" />
           </section>
-
-          <input
-            type="text"
-            placeholder="Buscar evento..."
-            className="busqueda"
-            onInput={handleSearch}
-          />
           <TotalEventosContador 
               conteo={conteoTotal} 
           />
           <div className="grupo-tarjetas">
-            {filtrados.map((e, index) => (
+            {eventos.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
           </div>

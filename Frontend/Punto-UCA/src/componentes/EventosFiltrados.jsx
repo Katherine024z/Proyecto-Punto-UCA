@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
-//importar imagenes
-import logoPuntoUca from "../images/logoPuntoUca.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
