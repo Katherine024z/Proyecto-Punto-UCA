@@ -4,11 +4,19 @@
     border-radius: 12px;
 }
 
+.tarjeta-evento .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+}
+
 .informacion-btn {
     background-color: #1d7dfb;
     color: white;
     border: none;
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: auto;
+    margin-bottom: 5px;
 }
 
 .informacion-btn:hover {
