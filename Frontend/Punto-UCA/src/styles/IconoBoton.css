@@ -1,5 +1,3 @@
-/*Estilos que emplearan los botones de menu localizados en la pagina*/
-
 .login-icon-link {
   display: flex;
   flex-direction: column;
@@ -7,19 +5,20 @@
   justify-content: center;
   gap: 4px;
   padding: 8px;
-  transition: transform 0.2s ease, opacity 0.3s ease; /*Animacion al poner el cursor sobre el boton*/
+  transition: transform 0.2s ease, opacity 0.3s ease; 
 }
 
 .login-icon-link:hover {
-  transform: scale(1.1); /*Se agranda el icono del boton*/
-  opacity: 0.8; /*Se vuelve un poco transparente*/
+  transform: scale(1.1); 
+  opacity: 0.8; 
 }
 
 .login-icon-link svg {
-  color: inherit;
+  color: #FEF4EE;
 }
 
 .login-text {
   font-size: 12px;
-  white-space: nowrap; /*Evita que el texto se divida en varias líneas */
+  white-space: nowrap; 
+  color: #FEF4EE;
 }
