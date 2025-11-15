@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-//importar imagenes
-import bannerImagen from "../images/evento1.png";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
 import CategoriasAside from "./CategoriasAside";
 import PaginacionEventos from "./PaginacionEventos";
 import TotalEventosContador from "./TotalEventosContador";
 import Header from "./Header";
+import ImagenesCarrusel from "./ImagenesCarrusel"
 
 const Home = () => {
   //variable de estado y funciones flechas
   const [eventos, setEventos] = useState([]);
+  const [destacados, setdestacados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
   const [paginaActual, setPaginaActual] = useState(1);
@@ -72,6 +72,28 @@ const Home = () => {
     fetchEventos();
   }, [paginaActual, terminoBusqueda]);
 
+    useEffect(() => {
+    async function fetchDestacados() {
+      try {
+
+        const respuesta = await fetch(`http://localhost:4000/eventos/destacados`);
+        
+        if (!respuesta.ok) {
+          throw new Error(`Error HTTP: ${respuesta.status}`);
+        }
+
+        const datos = await respuesta.json();
+        
+        setdestacados(datos); 
+
+      } catch (err) {
+        console.error("Fallo al obtener eventos destacados: ", err);
+        
+      }
+    }
+    fetchDestacados();
+  }, []);
+
   if (cargando) {
     return (
       <>
@@ -105,9 +127,7 @@ const Home = () => {
           toggleSidebar={toggleSidebar}
         />
         <div className="contenedor-principal">
-          <section className="banner">
-            <img src={bannerImagen} alt="Evento destacado" />
-          </section>
+          <ImagenesCarrusel destacados={destacados} />
           <TotalEventosContador 
               conteo={conteoTotal} 
           />
