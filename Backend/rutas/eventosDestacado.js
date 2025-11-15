@@ -6,8 +6,7 @@ const getEventosDestacados = async (req, res) => {
             SELECT e.id, e.nombre, i.URL AS imagen
             FROM Evento e
             INNER JOIN Imagen i ON i.id_evento = e.id
-            INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
-            WHERE e.destacado = 1 AND er.estado = 'Pendiente'
+            WHERE e.destacado = 1 AND e.id_estadoRealizacion=1 AND e.id_estadoAprobacion=2 AND i.id_tipoImagen = 2
             ORDER BY e.fecha ASC;
         `;
 
