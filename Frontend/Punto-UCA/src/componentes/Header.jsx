@@ -8,7 +8,9 @@ const Header = ({ busqueda, consulta }) => {
     <header>
 
       <div className="logo">
+        <Link to="/">
         <img src={logoPuntoUca} alt="PuntoUca" />
+        </Link>
       </div>
 
       <div className="contenedor-inicio-busqueda">
