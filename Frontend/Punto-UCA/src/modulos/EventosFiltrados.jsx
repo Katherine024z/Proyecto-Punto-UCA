@@ -83,12 +83,12 @@ const EventosFiltrados = () => {
   return (
     <>
       <Header/>
-      <main>
+      <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}
           toggleSidebar={toggleSidebar}
         />
-        <div className="content-area">
+        <div className="contenedor-principal">
           <TotalEventosContador 
               conteo={conteoTotal} 
               categoria={categoriaNombre} 

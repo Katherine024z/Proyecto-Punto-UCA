@@ -1,13 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
+
 import Home from './modulos/Home';
 import Login from './modulos/Login';
 import NuevoEvento from './modulos/NuevoEvento';
 import EventosFiltrados from './modulos/EventosFiltrados';
+
+import {GestorSesion} from './utilidades/contexto';
+
 import './styles/layout.css'; 
 
 function App() {
   return (
+    <GestorSesion>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -18,6 +23,7 @@ function App() {
         <Route path="/eventos" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
+    </GestorSesion>
   );
 }
 

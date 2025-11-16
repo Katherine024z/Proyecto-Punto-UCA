@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { useNavigate} from 'react-router-dom';
+
 import LoginBoton from "../componentes/LoginBoton.jsx";
+import { ContextoSesion } from '../utilidades/contexto.jsx';
 
 import "../styles/IconoBoton.css";
-import { useNavigate} from 'react-router-dom';
 
 const Login = () => {
   const [carnet, setCarnet] = useState('');
   const [contra, setContra] = useState('');
   const [error,setError] = useState(null);
   const [cargando,setCargando] = useState(false);
-
   const navigate = useNavigate()
+  const {setSesionInfo} = useContext(ContextoSesion)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,8 +37,13 @@ const Login = () => {
       throw new Error(data.mensaje || 'Error al iniciar sesión');
     }
 
-    localStorage.setItem('token',data.token);
-    localStorage.setItem('usuario',JSON.stringify(data.usuario));
+    const token = data.token;
+    const usuario = data.usuario;
+
+    setSesionInfo({token: token, usuario:usuario});
+
+    localStorage.setItem('token', token);
+    localStorage.setItem('usuario',JSON.stringify(usuario));
 
     navigate('/');
 
@@ -48,6 +55,7 @@ const Login = () => {
   };
 
   return (
+    <>    
     <main className="form-container">
       <h2>Iniciar Sesión</h2>
       <form onSubmit={handleSubmit}>
@@ -72,6 +80,7 @@ const Login = () => {
       </form>
       <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
     </main>
+    </>
   );
 };
 
