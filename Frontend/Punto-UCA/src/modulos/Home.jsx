@@ -8,6 +8,7 @@ import PaginacionEventos from "../componentes/PaginacionEventos";
 import TotalEventosContador from "../componentes/TotalEventosContador";
 import Header from "../componentes/Header";
 import ImagenesCarrusel from "../componentes/ImagenesCarrusel"
+import Login from "./Login";
 
 const Home = () => {
   //variable de estado y funciones flechas
@@ -121,6 +122,7 @@ const Home = () => {
       busqueda = {manejarNuevaBusqueda}
       consulta = {terminoBusqueda}
       />
+      <Login />
       <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}

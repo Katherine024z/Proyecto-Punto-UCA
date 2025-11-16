@@ -8,6 +8,7 @@ import CategoriasAside from "../componentes/CategoriasAside";
 import PaginacionEventos from "../componentes/PaginacionEventos";
 import TotalEventosContador from "../componentes/TotalEventosContador";
 import Header from "../componentes/Header";
+import Login from "./Login";
 
 const EventosFiltrados = () => {
   //variable de estado y funciones flechas
@@ -83,6 +84,7 @@ const EventosFiltrados = () => {
   return (
     <>
       <Header/>
+      <Login/>
       <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}

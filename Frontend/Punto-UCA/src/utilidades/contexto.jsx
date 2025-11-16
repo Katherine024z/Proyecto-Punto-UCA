@@ -3,6 +3,10 @@ import React, { createContext, useState, useEffect } from 'react';
 const ContextoSesion = createContext(null);
 
 const GestorSesion = ({ children }) => {
+
+  const [loginModalAbierto,setLoginModalAbierto] = useState(false);
+  const cambioLoginModal = () => setLoginModalAbierto(!loginModalAbierto);
+
   const [sesionInfo, setSesionInfo] = useState({
     token: null,
     usuario: null,
@@ -30,6 +34,9 @@ const GestorSesion = ({ children }) => {
     sesionInfo,
     setSesionInfo,
     logout,
+    loginModalAbierto,
+    setLoginModalAbierto,
+    cambioLoginModal
   };
 
   return <ContextoSesion.Provider value={value}>{children}</ContextoSesion.Provider>;

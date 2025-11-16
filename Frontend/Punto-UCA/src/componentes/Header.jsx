@@ -7,9 +7,12 @@ import BarraBusqueda from "./BarraBusqueda";
 
 import { ContextoSesion } from "../utilidades/contexto";
 
+
+import "../styles/IconoBoton.css";
+
 const Header = ({ busqueda, consulta }) => {
 
-  const { sesionInfo,logout} = useContext(ContextoSesion);
+  const { sesionInfo,logout,cambioLoginModal} = useContext(ContextoSesion);
 
   return (
     <header>
@@ -106,7 +109,11 @@ const Header = ({ busqueda, consulta }) => {
             </a>
           </>
         ) : (
-          <Link to="/login" className="opcion-icono">
+          <a href="/" className="opcion-icono" 
+            onClick={(e) =>{
+              e.preventDefault();
+              cambioLoginModal();
+            }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -122,7 +129,7 @@ const Header = ({ busqueda, consulta }) => {
               <circle cx="12" cy="7" r="4" />
             </svg>
             <span className="opcion-texto">Iniciar sesión</span>
-          </Link>
+          </a>
         )}
       </nav>
     </header>
@@ -130,3 +137,4 @@ const Header = ({ busqueda, consulta }) => {
 };
 
 export default Header;
+
