@@ -1,14 +1,50 @@
 import React, { useState } from 'react';
 import LoginBoton from "./LoginBoton.jsx";
+
 import "../styles/IconoBoton.css";
+import { useNavigate} from 'react-router-dom';
 
 const Login = () => {
-  const [usuario, setUsuario] = useState('');
-  const [clave, setClave] = useState('');
+  const [carnet, setCarnet] = useState('');
+  const [contra, setContra] = useState('');
+  const [error,setError] = useState(null);
+  const [cargando,setCargando] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert(`Bienvenido ${usuario}! (Inicio de sesión simulado)`);
+    setError(null);
+    setCargando(true);
+
+    try{
+      const respuesta = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          carnet: carnet,
+          contrasena: contra,
+        }),
+    });
+    
+    const data = await respuesta.json();
+
+    if(!respuesta.ok){
+      throw new Error(data.mensaje || 'Error al iniciar sesión');
+    }
+
+    localStorage.setItem('token',data.token);
+    localStorage.setItem('usuario',JSON.stringify(data.usuario));
+
+    navigate('/');
+
+    } catch(err) {
+      setError(err.message);
+    } finally{
+      setCargando(false);
+    }
   };
 
   return (
@@ -17,19 +53,22 @@ const Login = () => {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Usuario"
-          value={usuario}
-          onChange={(e) => setUsuario(e.target.value)}
+          placeholder="Carnet"
+          value={carnet}
+          onChange={(e) => setCarnet(e.target.value)}
           required
         />
         <input
           type="password"
           placeholder="Contraseña"
-          value={clave}
-          onChange={(e) => setClave(e.target.value)}
+          value={contra}
+          onChange={(e) => setContra(e.target.value)}
           required
         />
-        <LoginBoton text="Entrar" />
+        <LoginBoton text="Entrar" disabled={cargando} />
+
+        {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}
+
       </form>
       <p>¿No tienes cuenta? <a href="#">Regístrate aquí</a></p>
     </main>

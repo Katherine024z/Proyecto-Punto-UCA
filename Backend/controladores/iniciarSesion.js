@@ -9,7 +9,6 @@ const IniciarSesion = async (req, res) => {
     const { carnet, contrasena } = req.body;
 
     const pool = req.db;
-    invalid;
 
     const consulta = "SELECT * FROM Usuario WHERE carnet = @carnet";
 
@@ -41,13 +40,14 @@ const IniciarSesion = async (req, res) => {
 
     res.status(200).json({
       token: _jwt,
-      Usuario: {
+      usuario: {
         carnet: usuarioEncontrado.carnet,
         nombre: usuarioEncontrado.nombre,
+        apellido: usuarioEncontrado.apellido
       },
     });
   } catch (err) {
-    console.error("Error en /Login:", err.mensaje);
+    console.error("Error en /Login:", err.message);
     res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };
