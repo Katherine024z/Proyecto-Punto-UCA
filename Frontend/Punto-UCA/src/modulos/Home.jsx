@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar componentes
-import TarjetaEvento from "./TarjetaEvento";
-import CategoriasAside from "./CategoriasAside";
-import PaginacionEventos from "./PaginacionEventos";
-import TotalEventosContador from "./TotalEventosContador";
-import Header from "./Header";
-import ImagenesCarrusel from "./ImagenesCarrusel"
+import TarjetaEvento from "../componentes/TarjetaEvento";
+import CategoriasAside from "../componentes/CategoriasAside";
+import PaginacionEventos from "../componentes/PaginacionEventos";
+import TotalEventosContador from "../componentes/TotalEventosContador";
+import Header from "../componentes/Header";
+import ImagenesCarrusel from "../componentes/ImagenesCarrusel"
 
 const Home = () => {
   //variable de estado y funciones flechas

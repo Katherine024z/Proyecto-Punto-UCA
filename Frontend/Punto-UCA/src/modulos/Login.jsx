@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LoginBoton from "./LoginBoton.jsx";
+import LoginBoton from "../componentes/LoginBoton.jsx";
 
 import "../styles/IconoBoton.css";
 import { useNavigate} from 'react-router-dom';

@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import {useParams} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar componentes
-import TarjetaEvento from "./TarjetaEvento";
-import CategoriasAside from "./CategoriasAside";
-import PaginacionEventos from "./PaginacionEventos";
-import TotalEventosContador from "./TotalEventosContador";
-import Header from "./Header";
+import TarjetaEvento from "../componentes/TarjetaEvento";
+import CategoriasAside from "../componentes/CategoriasAside";
+import PaginacionEventos from "../componentes/PaginacionEventos";
+import TotalEventosContador from "../componentes/TotalEventosContador";
+import Header from "../componentes/Header";
 
 const EventosFiltrados = () => {
   //variable de estado y funciones flechas
