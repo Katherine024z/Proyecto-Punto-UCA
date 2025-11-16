@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { sql } from "../data/dbConfig.js";
 import { JWT_SECRET } from "../llaves/llaves.js";
 
-export const IniciarSesion = async (req, res) => {
+const IniciarSesion = async (req, res) => {
   try {
     const { carnet, contrasena } = req.body;
 
@@ -51,3 +51,5 @@ export const IniciarSesion = async (req, res) => {
     res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };
+
+export default IniciarSesion;
