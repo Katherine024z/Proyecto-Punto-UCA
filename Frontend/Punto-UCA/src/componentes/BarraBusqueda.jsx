@@ -15,13 +15,13 @@ const BarraBusqueda = ({ busqueda, consulta = "" }) => {
 
     if (terminoRecortado.length === 0) {
       setErrorBusqueda(null);
-      busqueda(""); // Notifica al padre (Home) para limpiar la lista
+      busqueda("");
     } else if (terminoRecortado.length >= LONGITUD_MIN) {
       setErrorBusqueda(null);
-      busqueda(terminoRecortado); // Notifica al padre (Home) el término final
+      busqueda(terminoRecortado);
     } else {
       setErrorBusqueda(
-        `Búsqueda muy corta. Mínimo ${LONGITUD_MIN} caracteres.`
+        `Búsqueda muy corta, mínimo ${LONGITUD_MIN} caracteres.`
       );
     }
   };
@@ -30,56 +30,26 @@ const BarraBusqueda = ({ busqueda, consulta = "" }) => {
     if (e.key === "Enter") {
       manejarBusqueda(terminoLocal);
     }
-  }; // 🚨 Esta función es la CLAVE: Actualiza el estado local en cada pulsación.
+  };
 
- const manejarCambioInput = (e) => {
-    // 1. Siempre actualiza el estado local para que el texto aparezca.
-    setTerminoLocal(e.target.value); 
-    
-    // 2. Opcional: Limpia el error si el texto ya cumple el mínimo
+  const manejarCambioInput = (e) => {
+    setTerminoLocal(e.target.value);
+
     if (errorBusqueda && e.target.value.length >= LONGITUD_MIN) {
-        setErrorBusqueda(null);
+      setErrorBusqueda(null);
     }
   };
-  
+
   const limpiarBusqueda = () => {
     setTerminoLocal("");
-    manejarBusqueda(""); // Llama a la lógica de búsqueda para notificar a Home que limpie
+    manejarBusqueda("");
     setErrorBusqueda(null);
   };
 
-
   return (
-    <div className="contenedor-busqueda">
-      
-      <div className="icono-lupa">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          width="24"
-          height="24"
-        >
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-      </div>
-
-      <input
-        type="text"
-        placeholder="Buscar evento..."
-        className="busqueda-input"
-        value={terminoLocal}
-        onChange={manejarCambioInput}
-        onKeyUp={manejarTecla}
-      />
-
-      {terminoLocal && (
-        <button onClick={limpiarBusqueda} className="icono-limpiar">
+    <div className="contenedor-busqueda-error">
+      <div className="contenedor-busqueda">
+        <div className="icono-lupa">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -91,12 +61,42 @@ const BarraBusqueda = ({ busqueda, consulta = "" }) => {
             width="24"
             height="24"
           >
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
           </svg>
-        </button>
-      )}
-      {errorBusqueda && <p className="error-busqueda" >{errorBusqueda}</p>}
+        </div>
+
+        <input
+          type="text"
+          placeholder="Buscar evento..."
+          className="busqueda-input"
+          value={terminoLocal}
+          onChange={manejarCambioInput}
+          onKeyUp={manejarTecla}
+        />
+
+        {terminoLocal && (
+          <button onClick={limpiarBusqueda} className="icono-limpiar">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              width="24"
+              height="24"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        )}
+      </div>
+      {errorBusqueda && (
+        <p className="error-busqueda">{errorBusqueda}</p>
+        )}
     </div>
   );
 };

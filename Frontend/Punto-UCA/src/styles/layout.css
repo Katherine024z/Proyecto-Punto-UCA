@@ -67,6 +67,12 @@ header .menu {
   margin: 0;
 }
 
+.error-busqueda{
+  margin: 0;
+  font-weight: bold;
+  font-size: 13px;
+  margin-left: 30px;
+}
 .contenedor-busqueda {
   background-color: rgb(255, 255, 198);
 }
@@ -160,6 +166,7 @@ main {
   flex-grow: 1;
   margin: 0 auto;
   width: 100%;
+  min-height: 70.3vh;
 }
 /*------EventosDestacados-------*/
 .carrusel-imagenes {
@@ -169,9 +176,23 @@ main {
 }
 
 /* --- CONTEO --- */
-.conteo-eventos {
+
+.texto-resultado-busqueda, .conteo-eventos{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.contenedor-conteo-resultado-busqueda{
   display: flex;
-  justify-content: right;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.conteo-eventos {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 /* --- EVENTOS  --- */

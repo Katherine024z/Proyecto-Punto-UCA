@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import {useParams} from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
@@ -14,10 +14,14 @@ const EventosFiltrados = () => {
   const [eventos, setEventos] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
-  const { categoriaNombre } = useParams();
-  const [paginaActual, setPaginaActual] = useState(1);
+  const [parametrosBusqueda, setParametrosBusqueda] = useSearchParams();
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [conteoTotal, setConteoTotal] = useState(0);
+
+  const { categoriaNombre } = useParams();
+
+  const paginaActual = parseInt(parametrosBusqueda.get("pagina")) || 1;
+  const terminoBusqueda = parametrosBusqueda.get("busqueda") || "";
 
   const eventosPagina = 12;
 
@@ -28,42 +32,70 @@ const EventosFiltrados = () => {
 
   const manejarCambioPagina = (nuevaPagina) => {
     if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
-      setPaginaActual(nuevaPagina);
+      const nuevoParametrosBusqueda = new URLSearchParams(parametrosBusqueda);
+      nuevoParametrosBusqueda.set("pagina", nuevaPagina);
+      setParametrosBusqueda(nuevoParametrosBusqueda);
     }
   };
 
+  const manejarNuevaBusqueda = (nuevoTermino) => {
+    const nuevoParametrosBusqueda = new URLSearchParams(parametrosBusqueda);
+
+    if (nuevoTermino) {
+      nuevoParametrosBusqueda.set("busqueda", nuevoTermino);
+    } else {
+      nuevoParametrosBusqueda.delete("busqueda");
+    }
+    nuevoParametrosBusqueda.set("pagina", 1);
+    setParametrosBusqueda(nuevoParametrosBusqueda);
+  };
+
   useEffect(() => {
-    async function fetchEventosCategoria() {
+    setParametrosBusqueda({ pagina: 1 });
+  }, [categoriaNombre]);
+
+  useEffect(() => {
+    const fetchEventosCategoria = async () => {
       setCarga(true);
       setError(null);
 
+      let url = `http://localhost:4000/eventos/categoria/${categoriaNombre}?pagina=${paginaActual}`;
+
+      if (terminoBusqueda) {
+        url += `&busqueda=${terminoBusqueda}`;
+      }
+
       try {
-        const respuesta = await fetch(`http://localhost:4000/eventos/categoria/${categoriaNombre}?pagina=${paginaActual}`);
+        const respuesta = await fetch(url);
 
         if (!respuesta.ok) {
-          throw new Error(`Error HTTP: ${respuesta.status}`);
+          throw new Error(
+            `Error en la respuesta del servidor: ${respuesta.statusText}`
+          );
         }
 
         const datos = await respuesta.json();
         setEventos(datos.eventos);
         setTotalPaginas(Math.ceil(datos.totalEventos / eventosPagina));
         setConteoTotal(datos.totalEventos);
-
       } catch (err) {
         console.error("Fallo al obtener eventos: ", err);
         setError("No se pudieron cargar los eventos. " + err.message);
       } finally {
         setCarga(false);
       }
-    }
+    };
     fetchEventosCategoria();
-  }, [categoriaNombre, paginaActual]);
+  }, [categoriaNombre, paginaActual, terminoBusqueda]);
 
   if (cargando) {
     return (
       <>
+        <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
         <main>
-          <h2 className="text-info">Cargando eventos de {categoriaNombre}...</h2>
+          <h2 className="text-info">
+            Cargando eventos de {categoriaNombre}...
+          </h2>
         </main>
       </>
     );
@@ -72,6 +104,7 @@ const EventosFiltrados = () => {
   if (error) {
     return (
       <>
+        <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
         <main>
           <h2 className="text-danger"> Error: {error}</h2>
         </main>
@@ -82,26 +115,33 @@ const EventosFiltrados = () => {
   //contenido html
   return (
     <>
-      <Header/>
+      <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
       <main>
         <CategoriasAside
           isVisible={isSidebarOpen}
           toggleSidebar={toggleSidebar}
         />
-        <div className="content-area">
-          <TotalEventosContador 
-              conteo={conteoTotal} 
-              categoria={categoriaNombre} 
-          />
+        <div className="contenedor-principal">
+          <div className="contenedor-conteo-resultado-busqueda">
+            {terminoBusqueda && (
+              <h5 className="texto-resultado-busqueda">
+                Resultados de búsqueda para:{" "}
+                <b>
+                  "<span className="termino-busqueda">{terminoBusqueda}</span>"
+                </b>
+              </h5>
+            )}
+            <TotalEventosContador conteo={conteoTotal} />
+          </div>
           <div className="grupo-tarjetas">
             {eventos.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
             <PaginacionEventos
-            pagActual = {paginaActual}
-            pagTotal = {totalPaginas}
-            cambiarPag = {manejarCambioPagina}
-          />
+              pagActual={paginaActual}
+              pagTotal={totalPaginas}
+              cambiarPag={manejarCambioPagina}
+            />
           </div>
         </div>
       </main>

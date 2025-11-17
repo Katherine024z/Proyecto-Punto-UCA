@@ -14,17 +14,17 @@ const buscarEventos = async (req, res) => {
         const consultaConteo = `
             SELECT COUNT(*) AS total
             FROM Evento e
-            INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
-            WHERE er.estado = 'Pendiente' AND e.nombre COLLATE Latin1_General_CI_AI LIKE @termino COLLATE Latin1_General_CI_AI;
+            WHERE e.id_estadoRealizacion = 1 AND e.id_estadoAprobacion = 2 
+                AND e.nombre COLLATE Latin1_General_CI_AI LIKE @termino COLLATE Latin1_General_CI_AI;
         `;
         
         const consultaBusqueda = `
             SELECT e.nombre, e.fecha, c.categoria, i.URL AS imagen
             FROM Evento e
             INNER JOIN Categoria c ON e.id_categoria = c.id
-            INNER JOIN EstadoRealizacion er ON e.id_estadoRealizacion = er.id
             INNER JOIN Imagen i on i.id_evento = e.id
-            WHERE er.estado = 'Pendiente' AND e.nombre COLLATE Latin1_General_CI_AI LIKE @termino COLLATE Latin1_General_CI_AI
+            WHERE e.id_estadoRealizacion = 1 AND e.id_estadoAprobacion = 2 AND i.id_tipoImagen = 1
+                AND e.nombre COLLATE Latin1_General_CI_AI LIKE @termino COLLATE Latin1_General_CI_AI
             ORDER BY e.fecha ASC
             OFFSET @desplazamiento ROWS
             FETCH NEXT @limite ROWS ONLY;

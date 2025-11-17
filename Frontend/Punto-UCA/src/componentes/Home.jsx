@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar componentes
 import TarjetaEvento from "./TarjetaEvento";
@@ -7,7 +7,7 @@ import CategoriasAside from "./CategoriasAside";
 import PaginacionEventos from "./PaginacionEventos";
 import TotalEventosContador from "./TotalEventosContador";
 import Header from "./Header";
-import ImagenesCarrusel from "./ImagenesCarrusel"
+import ImagenesCarrusel from "./ImagenesCarrusel";
 
 const Home = () => {
   //variable de estado y funciones flechas
@@ -15,41 +15,53 @@ const Home = () => {
   const [destacados, setdestacados] = useState([]);
   const [cargando, setCarga] = useState(true);
   const [error, setError] = useState(null);
-  const [paginaActual, setPaginaActual] = useState(1);
+  const [parametrosBusqueda, setParametrosBusqueda] = useSearchParams();
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [conteoTotal, setConteoTotal] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [terminoBusqueda, setTerminoBusqueda] = useState("");
+
+  const paginaActual = parseInt(parametrosBusqueda.get("pagina")) || 1;
+  const terminoBusqueda = parametrosBusqueda.get("busqueda") || "";
 
   const EVENTOS_PAGINA = 12;
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
-  
+
   const manejarCambioPagina = (nuevaPagina) => {
     if (nuevaPagina >= 1 && nuevaPagina <= totalPaginas) {
-      setPaginaActual(nuevaPagina);
+      const nuevoParametrosBusqueda = new URLSearchParams(parametrosBusqueda);
+      nuevoParametrosBusqueda.set("pagina", nuevaPagina);
+      setParametrosBusqueda(nuevoParametrosBusqueda);
     }
   };
 
   const manejarNuevaBusqueda = (nuevoTermino) => {
-    setPaginaActual(1);
-    setTerminoBusqueda(nuevoTermino);
+    const nuevoParametrosBusqueda = new URLSearchParams(parametrosBusqueda);
+
+    if (nuevoTermino) {
+      nuevoParametrosBusqueda.set("busqueda", nuevoTermino);
+    } else {
+      nuevoParametrosBusqueda.delete("busqueda");
+    }
+    nuevoParametrosBusqueda.set("pagina", 1);
+    setParametrosBusqueda(nuevoParametrosBusqueda);
   };
 
   useEffect(() => {
     async function fetchEventos() {
-    setCarga(true);
-    let url;
-    const base = "http://localhost:4000";
+      setCarga(true);
+      setError(null);
 
-    if (terminoBusqueda) {
-      url = `${base}/eventos/buscar?termino=${terminoBusqueda}&pagina=${paginaActual}`;
-    }
-    else{
-      url = `${base}/eventos?pagina=${paginaActual}`;
-    }
+      let url;
+      const base = "http://localhost:4000";
+
+      if (terminoBusqueda) {
+        url = `${base}/eventos/buscar?termino=${terminoBusqueda}&pagina=${paginaActual}`;
+      } else {
+        url = `${base}/eventos?pagina=${paginaActual}`;
+      }
       try {
         const respuesta = await fetch(url);
 
@@ -72,23 +84,22 @@ const Home = () => {
     fetchEventos();
   }, [paginaActual, terminoBusqueda]);
 
-    useEffect(() => {
+  useEffect(() => {
     async function fetchDestacados() {
       try {
+        const respuesta = await fetch(
+          `http://localhost:4000/eventos/destacados`
+        );
 
-        const respuesta = await fetch(`http://localhost:4000/eventos/destacados`);
-        
         if (!respuesta.ok) {
           throw new Error(`Error HTTP: ${respuesta.status}`);
         }
 
         const datos = await respuesta.json();
-        
-        setdestacados(datos); 
 
+        setdestacados(datos);
       } catch (err) {
         console.error("Fallo al obtener eventos destacados: ", err);
-        
       }
     }
     fetchDestacados();
@@ -97,6 +108,7 @@ const Home = () => {
   if (cargando) {
     return (
       <>
+        <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
         <main>
           <h2 className="text-info">Cargando eventos...</h2>
         </main>
@@ -107,6 +119,7 @@ const Home = () => {
   if (error) {
     return (
       <>
+        <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
         <main>
           <h2 className="text-danger"> Error: {error}</h2>
         </main>
@@ -117,10 +130,7 @@ const Home = () => {
   //contenido html
   return (
     <>
-      <Header
-      busqueda = {manejarNuevaBusqueda}
-      consulta = {terminoBusqueda}
-      />
+      <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
       <main>
         <CategoriasAside
           isVisible={isSidebarOpen}
@@ -128,18 +138,25 @@ const Home = () => {
         />
         <div className="contenedor-principal">
           <ImagenesCarrusel destacados={destacados} />
-          <TotalEventosContador 
-              conteo={conteoTotal} 
-          />
+          <div className="contenedor-conteo-resultado-busqueda">
+            {terminoBusqueda && (
+              <h5 className="texto-resultado-busqueda">
+                Resultados de búsqueda para: <b>"
+                <span className="termino-busqueda">{terminoBusqueda}</span>"</b>
+              </h5>
+            )}
+            <TotalEventosContador conteo={conteoTotal} />
+          </div>
+
           <div className="grupo-tarjetas">
             {eventos.map((e, index) => (
               <TarjetaEvento key={index} {...e} />
             ))}
           </div>
           <PaginacionEventos
-            pagActual = {paginaActual}
-            pagTotal = {totalPaginas}
-            cambiarPag = {manejarCambioPagina}
+            pagActual={paginaActual}
+            pagTotal={totalPaginas}
+            cambiarPag={manejarCambioPagina}
           />
         </div>
       </main>
@@ -154,4 +171,3 @@ const Home = () => {
 };
 
 export default Home;
-
