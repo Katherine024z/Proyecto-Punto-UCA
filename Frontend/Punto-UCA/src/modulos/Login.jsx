@@ -33,7 +33,7 @@ const Login = () => {
       const data = await respuesta.json();
 
       if (!respuesta.ok) {
-        throw new Error(data.mensaje || 'Error al iniciar sesión');
+        throw new Error(data.message || 'Error al iniciar sesión');
       }
 
       const token = data.token;
