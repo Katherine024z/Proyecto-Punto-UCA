@@ -135,7 +135,8 @@ const Home = () => {
       busqueda = {manejarNuevaBusqueda}
       consulta = {terminoBusqueda}
       />
-      <main>
+      <Login />
+      <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}
           toggleSidebar={toggleSidebar}
