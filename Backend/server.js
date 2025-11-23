@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
-import { initializeDb } from './db/dbConfig.js';
-import rutas from './rutas/rutas.js';
+import { initializeDb } from './data/dbConfig.js';
+import rutas from './enrutador/rutas.js';
 
 const app = express();
 const PORT = 4000;

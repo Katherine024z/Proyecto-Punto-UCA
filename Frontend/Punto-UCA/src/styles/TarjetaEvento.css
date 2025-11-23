@@ -17,6 +17,12 @@
     flex-grow: 1;
 }
 
+.tarjeta-evento .card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; 
+}
+
 .informacion-btn {
     background-color: #1d7dfb;
     color: white;
@@ -24,6 +30,8 @@
      width: 100%;
     margin-top: auto; 
     transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: auto;
+    margin-bottom: 5px;
 }
 
 .informacion-btn:hover {
@@ -31,10 +39,8 @@
     transform: scale(1.03);
 }
 
-
-/* Opcional: Estilo de la imagen */
-.tarjeta-evento .card-img-top {
-    height: 180px;
+.tarjeta-evento .card-img{
+    height: 320px;
     object-fit: cover;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;

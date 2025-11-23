@@ -1,4 +1,3 @@
-/*Importar fuentes de letra*/
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Lexend:wght@300;400;600&family=Cherry+Bomb+One&display=swap");
 
 * {
@@ -8,52 +7,77 @@
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Montserrat";
   background-color: #fbfbee;
   color: #222;
 }
 
 /* --- HEADER --- */
+
 header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-wrap: wrap;
   padding: 10px 20px;
-  background-color: #004aad;
+  background-color:#AAC4F5;
   color: white;
-  font-family: "Montserrat", sans-serif;
 }
 
 header .logo img {
   width: 100px;
   height: auto;
+  
 }
 
+.contenedor-inicio-busqueda {
+  display: flex;
+  align-items: center;
+  padding-left: 160px;
+  gap: 20px;
+  flex-grow: 1;
+  justify-content: center;
+  min-width: 0;
+}
 header .menu {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  gap: 8px;
 }
 
-header .menu a {
-  margin: 0 10px;
-  color: rgb(255, 255, 198);
-  text-decoration: none;
+.contenedor-busqueda {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 18px;
+  height: 40px;
+  min-width: 425px;
+  max-width: 500px;
+  background-color: rgb(255, 255, 198);
+}
+
+.busqueda-input {
+  flex-grow: 1;
+  color: #004aad;
   font-weight: bold;
+  background-color: transparent;
+  font-size: 15px;
+  padding: 0;
+  height: 100%;
+  border: none;
+  outline: none;
+  min-width: 300px;
+  max-width: 500px;
+  margin: 0;
 }
 
-header .menu a:hover {
-  text-decoration: underline;
+.error-busqueda{
+  margin: 0;
+  font-weight: bold;
+  font-size: 13px;
+  margin-left: 30px;
 }
 
-/* --- BANNER --- */
-.banner img {
-  width: 100%;
-  height: 375px;
-  object-fit: cover;
-  display: block;
-}
 
 /* --- MAIN  --- */
 main {
@@ -66,20 +90,24 @@ main {
 
 /* --- DISTRIBUCION:MAIN:ASIDE  --- */
 .barra-lateral {
-  padding: 10px;
   position: relative;
   width: 70px;
-  transition: width 0.3s ease-in-out;
+  height: 75px;
+  padding: 10px;
+  border-radius: 15px;
   flex-shrink: 0;
+  align-content: center;
   overflow: hidden;
-  background-color: rgb(254, 246, 254);
-  border-radius: 8px;
+  transition: width 0.3s ease-in-out;
+  background-color: #c4dafa;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  font-family: "Cherry Swash", cursive;
 }
 
 .barra-lateral.barra-abierta {
   width: 250px;
+  min-height: 425px;
+  text-align: left;
+  padding: 10px 20px;
 }
 
 .boton-lateral {
@@ -88,15 +116,17 @@ main {
   cursor: pointer;
   width: 100%;
   text-align: center;
-  padding: 5px 0;
-  margin-bottom: 10px;
-  color: #333;
-  font-size: 1.5em;
+  padding: 8px 0;
+  color:#FEF4EE;
+  font-size: 25px;
+  font-weight: 900;
+  transition: transform 0.2s ease, opacity 0.3s ease;
 }
 
-.barra-lateral a:hover {
-  color: #98c8d5;
-  font-weight: bold;
+.boton-lateral:hover {
+  
+  transform: scale(1.2);
+  
 }
 
 .contenido-lateral {
@@ -107,9 +137,16 @@ main {
   display: none;
 }
 
-.contenido-lateral h3 {
-  margin-bottom: 10px;
+.barra-lateral a:hover {
   color: #004aad;
+}
+
+.contenido-lateral h3 {
+  margin-bottom: 20px;
+  color: #004aad;
+  font-family: "Montserrat";
+  font-weight: bold;
+  text-align: center;
 }
 
 .contenido-lateral ul {
@@ -124,36 +161,64 @@ main {
 .contenido-lateral a {
   text-decoration: none;
   color: #333;
+  font-weight: 500;
+}
+
+.contenido-lateral a.categoria-activa {
+  color: #004aad;
+  font-weight: 700;
+  transform: translateX(0);
+  margin: 0;
+  padding: 2px 8px 2px 8px;
+}
+
+.contenido-lateral a.categoria-activa:hover {
+  color: #003080;
+  border-left-color: #003080;
 }
 
 /* --- DISTRIBUCION:MAIN:ASIDE:CONTENIDO  --- */
-.content-area {
+.contenedor-principal {
   flex-grow: 1;
   margin: 0 auto;
   width: 100%;
+  min-height: 70.3vh;
+}
+/*------EventosDestacados-------*/
+.carrusel-imagenes {
+  height: 400px; 
+  object-fit: cover;
+  object-position: center;
 }
 
-/* --- BÚSQUEDA --- */
-.busqueda {
-  width: 100%;
-  padding: 10px;
-  margin-top:20px;
-  margin-bottom: 20px;
-  border: 2px solid #004aad;
-  border-radius: 5px;
-  font-size: 1em;
+/* --- CONTEO Y RESULTADO DE BUSQUEDA--- */
+
+.texto-resultado-busqueda, .conteo-eventos{
+  font-size: 16px;
+  font-weight: 500;
 }
-.conteo-eventos {
+
+.contenedor-conteo-resultado-busqueda{
   display: flex;
-  justify-content: right;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
 }
+
+.conteo-eventos {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
 /* --- EVENTOS  --- */
 .grupo-tarjetas {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin: 20px auto 10px auto;
-    width: 100%; 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); 
+  gap: 30px;
+  margin: 20px auto 10px auto;
+  width: 100%;
+    
 }
 
 /* --- FORMULARIOS  --- */
@@ -188,6 +253,6 @@ footer {
   padding: 10px;
   margin-top: 20px;
   text-align: center;
-  background-color: #004aad;
+  background-color: #AAC4F5;
   color: white;
 }

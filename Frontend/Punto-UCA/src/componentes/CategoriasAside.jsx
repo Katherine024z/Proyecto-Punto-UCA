@@ -1,12 +1,25 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useParams } from "react-router-dom";
 
 function CategoriasAside({ isVisible, toggleSidebar }) {
+  const { categoriaNombre } = useParams();
+
+  const categorias = [
+    "Académico",
+    "Deportivo",
+    "Cultural",
+    "Social",
+    "Tecnológico",
+    "Salud y bienestar",
+    "Emprendimiento",
+    "Desarrollo profesional",
+    "Religioso"
+  ];
+
   return (
     <aside
-      className={`barra-lateral ${isVisible ? "barra-abierta" : "barra-cerrada"
-        }`}
-    >
+      className={`barra-lateral ${isVisible ? "barra-abierta" : "barra-cerrada"}
+  `}>
       <button onClick={toggleSidebar} className="boton-lateral">
         {isVisible ? "←" : "→"}
       </button>
@@ -14,15 +27,14 @@ function CategoriasAside({ isVisible, toggleSidebar }) {
       <div className="contenido-lateral">
         <h3>Categorías</h3>
         <ul>
-          <li><Link to="/eventos/categoria/Académico">Académicos</Link></li>
-          <li><Link to="/eventos/categoria/Deportivo">Deportivos</Link></li>
-          <li><Link to="/eventos/categoria/Cultural">Culturales</Link></li>
-          <li><Link to="/eventos/categoria/Social">Sociales</Link></li>
-          <li><Link to="/eventos/categoria/Tecnológico">Tecnológicos</Link></li>
-          <li><Link to="/eventos/categoria/Salud y Bienestar">Salud y Bienestar</Link></li>
-          <li><Link to="/eventos/categoria/Emprendimiento">Emprendimientos</Link></li>
-          <li><Link to="/eventos/categoria/Desarrollo profesional">Desarrollo profesional</Link></li>
-          <li><Link to="/eventos/categoria/Religioso">Religiosos</Link></li>
+          {categorias.map((categoria, index) => (
+            <li key={index}>
+              <Link to ={`/eventos/categoria/${categoria}?pagina=1`}
+                className={categoriaNombre === categoria ? "categoria-activa" : ""}>
+                  {categoria}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </aside>
