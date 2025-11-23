@@ -6,6 +6,7 @@ import getEventosPorCategoria from '../controladores/categoriaEventosRuta.js';
 import getEventosDestacados from '../controladores/eventosDestacado.js';
 import buscarEventos from '../controladores/busquedaRuta.js';
 import IniciarSesion from "../controladores/iniciarSesion.js";
+import registrarse  from "../controladores/registrarUsuario.js";
 
 const rutas = Router();
 
@@ -14,5 +15,6 @@ rutas.get('/eventos/categoria/:nombreCategoria', getEventosPorCategoria);
 rutas.get('/eventos/buscar', buscarEventos);
 rutas.get('/eventos/destacados',getEventosDestacados);
 rutas.post('/login', IniciarSesion);
+rutas.post('/registro',registrarse);
 
 export default rutas;

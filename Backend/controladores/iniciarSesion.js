@@ -47,7 +47,7 @@ const IniciarSesion = async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Error en /Login:", err.message);
+    console.error("Error en Iniciar Sesion", err.message);
     res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };
