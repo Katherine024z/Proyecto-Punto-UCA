@@ -23,7 +23,8 @@ const EventCard = ({ nombre, fecha, categoria, descripcion, imagen}) => {
   return (
     <Card className="tarjeta-evento">
       <CardImg alt={nombre || "Evento"} src={imagen || "URL_IMAGEN_POR_DEFECTO"} />
-      <CardBody>
+      <CardBody className="cuerpo-tarjeta">
+         <div className="contenido">
         <CardTitle className="titulo" tag="h5">
           {nombre}
         </CardTitle>
@@ -33,6 +34,7 @@ const EventCard = ({ nombre, fecha, categoria, descripcion, imagen}) => {
         <CardText className="categoria">
           Categoría: {categoria || "Sin Categoría"}
         </CardText>
+        </div>
         <Button className="informacion-btn">Ver más</Button>
       </CardBody>
     </Card>
