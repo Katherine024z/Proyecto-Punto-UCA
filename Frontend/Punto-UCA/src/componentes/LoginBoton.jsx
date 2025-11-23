@@ -1,11 +1,12 @@
 import React from "react";
 import "../styles/IconoBoton.css";
 
-//Al confirmar el inicio de sesion, el boton dira "Entrar"
-export default function LoginBoton({ text = "Entrar" }) {
+function LoginBoton({ text = "Entrar", disabled = false }) {
   return (
-    <button type="submit" className="login-btn">
-      <span>{text}</span>
+    <button type="submit" className="login-btn" disabled={disabled}>
+      <span>{disabled ? "Verificando..." : text}</span>
     </button>
   );
 }
+
+export default LoginBoton;

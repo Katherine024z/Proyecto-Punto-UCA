@@ -81,6 +81,10 @@ header .menu {
 
 /* --- MAIN  --- */
 main {
+  flex-grow: 1; 
+}
+
+.distribucion-barra {
   display: flex;
   padding: 20px;
   gap: 20px;
@@ -229,6 +233,23 @@ main {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/*---Modal:Formulario ---*/
+.modal-body {
+  background-color: #effaf8; 
+}
+
+.modal-body .form-container {
+  background: none;
+  box-shadow: none;
+  margin: 0 auto; 
+  padding: 0;
+}
+
+.modal-header {
+  background-color: #effaf8;
+  border-bottom: none; 
 }
 
 input,

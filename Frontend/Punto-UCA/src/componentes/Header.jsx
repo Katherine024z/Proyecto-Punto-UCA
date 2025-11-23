@@ -1,9 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Link } from "react-router-dom";
+
+
 import logoPuntoUca from "../images/logoPuntoUca.png";
 import BarraBusqueda from "./BarraBusqueda";
 
+import { ContextoSesion } from "../utilidades/contexto";
+
+
+import "../styles/IconoBoton.css";
+
 const Header = ({ busqueda, consulta }) => {
+
+  const { sesionInfo,logout,cambioLoginModal} = useContext(ContextoSesion);
+
   return (
     <header>
 
@@ -32,7 +42,9 @@ const Header = ({ busqueda, consulta }) => {
           <span className="opcion-texto">Inicio</span>
         </Link>
 
+  
         <BarraBusqueda busqueda={busqueda} consulta={consulta} />
+
       </div>
 
       <nav className="menu">
@@ -54,27 +66,75 @@ const Header = ({ busqueda, consulta }) => {
           </svg>
           <span className="opcion-texto">Proponer Evento</span>
         </Link>
+        
+        {sesionInfo.token ? (
+          
+          <>
+            <Link to="/" className="opcion-icono">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                width="24"
+                height="24"
+              >
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+              <span className="opcion-texto">
+                {sesionInfo.usuario ? sesionInfo.usuario.nombre : 'Perfil'}
+              </span>
+            </Link>
 
-        <Link to="/login" className="opcion-icono">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            width="24"
-            height="24"
-          >
-            <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-            <circle cx="12" cy="7" r="4" />
-          </svg>
-          <span className="opcion-texto">Iniciar sesión</span>
-        </Link>
+            <a href="/" onClick={logout} className="opcion-icono">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M18.36 6.64a9 9 0 1 1-12.73 0"/>
+                <line x1="12" y1="2" x2="12" y2="12"/>
+              </svg>
+              <span className="opcion-texto">Cerrar sesión</span>
+            </a>
+          </>
+        ) : (
+          <a href="/" className="opcion-icono" 
+            onClick={(e) =>{
+              e.preventDefault();
+              cambioLoginModal();
+            }}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              width="24"
+              height="24"
+            >
+              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <span className="opcion-texto">Iniciar sesión</span>
+          </a>
+        )}
       </nav>
     </header>
   );
 };
 
 export default Header;
+

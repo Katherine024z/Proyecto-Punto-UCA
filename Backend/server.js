@@ -2,9 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import { initializeDb } from './data/dbConfig.js';
 import rutas from './enrutador/rutas.js';
+import { PORT } from "./llaves/llaves.js";
 
 const app = express();
-const PORT = 4000;
+
 
 app.use(cors({
     origin: 'http://localhost:5173'

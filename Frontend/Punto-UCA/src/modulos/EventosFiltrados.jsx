@@ -3,11 +3,12 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 //importar componentes
-import TarjetaEvento from "./TarjetaEvento";
-import CategoriasAside from "./CategoriasAside";
-import PaginacionEventos from "./PaginacionEventos";
-import TotalEventosContador from "./TotalEventosContador";
-import Header from "./Header";
+import TarjetaEvento from "../componentes/TarjetaEvento";
+import CategoriasAside from "../componentes/CategoriasAside";
+import PaginacionEventos from "../componentes/PaginacionEventos";
+import TotalEventosContador from "../componentes/TotalEventosContador";
+import Header from "../componentes/Header";
+import Login from "./Login";
 
 const EventosFiltrados = () => {
   //variable de estado y funciones flechas
@@ -116,7 +117,8 @@ const EventosFiltrados = () => {
   return (
     <>
       <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
-      <main>
+      <Login/>
+      <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}
           toggleSidebar={toggleSidebar}
