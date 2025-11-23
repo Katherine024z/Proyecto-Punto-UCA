@@ -1,47 +1,32 @@
 .tarjeta-evento {
-    background-color: rgb(245, 252, 215);
-    height: 100%;
-    border-radius: 12px;
-     display: flex;
-    flex-direction: column;
-}
-
-.cuerpo-tarjeta {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 1rem;
-}
-
-.contenido {
-    flex-grow: 1;
+  background-color: rgb(245, 252, 215);
+  height: 100%;
+  border-radius: 12px;
 }
 
 .tarjeta-evento .card-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .informacion-btn {
-    background-color: #1d7dfb;
-    color: white;
-    border: none;
-     width: 100%;
-    margin-top: auto; 
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: auto;
-    margin-bottom: 5px;
+  background-color: #1d7dfb;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: auto;
+  margin-bottom: 5px;
 }
 
 .informacion-btn:hover {
-    background-color: #9d61fc; 
-    transform: scale(1.03);
+  background-color: #9d61fc;
+  transform: scale(1.03);
 }
 
-.tarjeta-evento .card-img{
-    height: 320px;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
+.tarjeta-evento .card-img {
+  height: 320px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
 }
