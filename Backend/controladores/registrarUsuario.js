@@ -1,13 +1,14 @@
 import { sql } from "../data/dbConfig.js";
-import bcrypt from "bcryptjs";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
+import { generateHash } from "../utilidades/hashes/hash.js";
+
 const nombreArchivo = fileURLToPath(import.meta.url);
 const rutaArchivo = path.dirname(nombreArchivo);
 
-export const registrarse = async (req, res) => {
+const registrarse = async (req, res) => {
   try {
     const { carnet, nombre, apellido, contrasena } = req.body;
 
@@ -31,13 +32,13 @@ export const registrarse = async (req, res) => {
 
     const consultarCarnet = "SELECT * FROM Usuario where carnet = @carnet";
     const cuentaExistente = await pool
-      .reques()
+      .request()
       .input("carnet", sql.VarChar, carnet)
       .query(consultarCarnet);
 
-    if (cuentaExistente.recordset.lenght > 0) {
+    if (cuentaExistente.recordset.length > 0) {
       return res.status(409).json({
-        menaje: "Este carnet ya esta asociado a una cuenta dentro del sistema",
+        mensaje: "Este carnet ya esta asociado a una cuenta dentro del sistema",
       });
     }
 
@@ -45,7 +46,7 @@ export const registrarse = async (req, res) => {
 
     const consultaInsertar = `
           INSERT INTO Usuario (carnet, nombre, apellido, contrasena, id_rol)
-          VAALUES (@carnet, @nombre, @apellido, @contrasena, 1)
+          VALUES (@carnet, @nombre, @apellido, @contrasena, 1)
           `;
 
     await pool
@@ -64,3 +65,5 @@ export const registrarse = async (req, res) => {
     res.status(500).json({ mensaje: "Error en el servidor" });
   }
 };
+
+export default registrarse;
