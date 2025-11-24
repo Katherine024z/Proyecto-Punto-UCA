@@ -269,6 +269,47 @@ button {
   border-radius: 5px;
 }
 
+.contenedor-contraseña {
+  display: flex;
+  flex-grow: 1; 
+  align-items: center;
+  position: relative;
+  background-color: white;
+  border: 1px solid #767676;
+  margin-bottom: 10px;
+  padding: 0 ;
+  height: 46px;
+}
+
+.contenedor-contraseña input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  margin: 0;
+  background: transparent;
+  min-width: 0;
+  height: 100%;
+  
+}
+
+.boton-visualizador {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 7px;
+  cursor: pointer;
+  color: #666;
+  background-color: transparent;
+  margin: 0;
+  width: 30px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.boton-visualizador:hover {
+  color: #004aad ;
+}
+
 /* --- FOOTER --- */
 footer {
   padding: 10px;

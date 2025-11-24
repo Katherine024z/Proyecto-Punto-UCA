@@ -10,7 +10,11 @@ const rutaArchivo = path.dirname(nombreArchivo);
 
 const registrarse = async (req, res) => {
   try {
-    const { carnet, nombre, apellido, contrasena } = req.body;
+    let { carnet, nombre, apellido, contrasena } = req.body;
+
+    if (carnet) carnet= carnet.trim();
+    if (nombre) nombre = nombre.trim();
+    if (apellido) apellido = apellido.trim();
 
     if (!carnet || !contrasena || !nombre || !apellido) {
       return res
