@@ -43,28 +43,25 @@
   position: absolute;
   top: 15px;
   right: 15px;
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
   color: white;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 2rem;
+  line-height: 1;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.3s;
+  opacity: 0.7;
+  transition: opacity 0.3s;
+  width: auto;
 }
 
 .btn-cerrar:hover {
-  background: white;
-  color: black;
+  opacity: 1;
+  background: transparent;
 }
 
 .modal-cuerpo {
   padding: 25px;
-  background-color: #141414;
+  background-color: #1A1A1A;
 }
 
 .modal-distribucion {
@@ -74,7 +71,7 @@
 }
 
 .dato-destacado {
-  color: #46d369;
+  color: #3D64B8;
   font-weight: bold;
   font-size: 1.1rem;
 }
@@ -82,4 +79,18 @@
 .modal-footer {
   margin-top: 20px;
   text-align: right
+}
+
+.btn-inscribirse {
+  background-color: #3D64B8;
+  border-color: #3D64B8;
+  color: white;
+  padding: 10px 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-inscribirse:hover {
+  background-color: #2b4a8c;
+  border-color: #2b4a8c;
 }

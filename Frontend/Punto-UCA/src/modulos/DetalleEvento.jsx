@@ -20,7 +20,7 @@ const DetalleEvento = ({ estaAbierto, cambiar , evento}) => {
     <Modal isOpen={estaAbierto} toggle={cambiar} size="lg" centered className="modal-estructura">
 
       <div className="modal-banner">
-        <button className="btn-cerrar" onClick={cambiar}></button>
+        <button className="btn-cerrar" onClick={cambiar}>X</button>
         <img
           src={evento.imagen || "https://picsum.photos/800/400"}
           alt={evento.nombre}
@@ -56,7 +56,7 @@ const DetalleEvento = ({ estaAbierto, cambiar , evento}) => {
         </div>
 
         <div className="modal-footer">
-          <Button color= "secondary" outline onClick={cambiar}>Inscribirse</Button>
+          <Button className= "btn-inscribirse" onClick={cambiar}>Inscribirse</Button>
         </div>
 
       </ModalBody>
