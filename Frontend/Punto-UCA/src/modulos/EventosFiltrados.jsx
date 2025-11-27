@@ -9,6 +9,7 @@ import PaginacionEventos from "../componentes/PaginacionEventos";
 import TotalEventosContador from "../componentes/TotalEventosContador";
 import Header from "../componentes/Header";
 import Login from "./Login";
+import DetalleEvento from "./DetalleEvento";
 
 const EventosFiltrados = () => {
   //variable de estado y funciones flechas
@@ -18,6 +19,9 @@ const EventosFiltrados = () => {
   const [parametrosBusqueda, setParametrosBusqueda] = useSearchParams();
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [conteoTotal, setConteoTotal] = useState(0);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
+  
 
   const { categoriaNombre } = useParams();
 
@@ -25,6 +29,16 @@ const EventosFiltrados = () => {
   const terminoBusqueda = parametrosBusqueda.get("busqueda") || "";
 
   const eventosPagina = 12;
+
+  const abrirModalDetalle = (evento) => {
+    setEventoSeleccionado(evento);
+    setModalAbierto(true);
+  }
+
+  const cerrarModalDetalle = () => {
+    setModalAbierto(false);
+    setEventoSeleccionado(null);
+  }
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const toggleSidebar = () => {
@@ -117,7 +131,12 @@ const EventosFiltrados = () => {
   return (
     <>
       <Header busqueda={manejarNuevaBusqueda} consulta={terminoBusqueda} />
-      <Login/>
+      <Login />
+      <DetalleEvento
+        estaAbierto={modalAbierto}
+        cambiar={cerrarModalDetalle}
+        evento={eventoSeleccionado}
+      />
       <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}
@@ -136,15 +155,17 @@ const EventosFiltrados = () => {
             <TotalEventosContador conteo={conteoTotal} />
           </div>
           <div className="grupo-tarjetas">
-            {eventos.map((e, index) => (
-              <TarjetaEvento key={index} {...e} />
+            {eventos.map((e) => (
+              <TarjetaEvento key={e.id} {...e}
+                onClickVermas={() => abrirModalDetalle(e)}
+              />
             ))}
-            <PaginacionEventos
-              pagActual={paginaActual}
-              pagTotal={totalPaginas}
-              cambiarPag={manejarCambioPagina}
-            />
           </div>
+          <PaginacionEventos
+            pagActual={paginaActual}
+            pagTotal={totalPaginas}
+            cambiarPag={manejarCambioPagina}
+          />
         </div>
       </main>
 
