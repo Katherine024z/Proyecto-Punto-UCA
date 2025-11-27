@@ -28,7 +28,7 @@ const InscribirseEvento = async (req, res) => {
   const consultaUsuarioInscrito = "SELECT id FROM Inscripcion WHERE id_evento = @id_evento AND id_usuario = @carnet";
   const resultadoUsuarioInscrito = await pool.request()
     .input("id_evento", sql.Int, id_evento)
-    .input("canet", sql.VarChar, carnet)
+    .input("carnet", sql.VarChar, carnet)
     .query(consultaUsuarioInscrito);
 
   if (resultadoUsuarioInscrito.recordset.length > 0){
