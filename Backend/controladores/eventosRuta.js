@@ -14,7 +14,7 @@ const getEventos = async (req, res) => {
             `;
         
         const consulta = `
-            SELECT e.id, e.nombre, e.fecha, e.descripcion, e.duracion, e.encargado, c.categoria, i.URL AS imagen
+            SELECT e.id, e.nombre, e.fecha, e.descripcion, e.duracion, e.encargado, c.categoria,e.cupos, i.URL AS imagen
             FROM Evento e
             INNER JOIN Categoria c ON e.id_categoria = c.id
             INNER JOIN Imagen i on i.id_evento = e.id
