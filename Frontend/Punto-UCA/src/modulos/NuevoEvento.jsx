@@ -8,9 +8,9 @@ import { Spinner } from 'react-bootstrap';
 import "../styles/IconoBoton.css";
 
 const NuevoEvento = () => {
-  const { sesionInfo, loginModalAbiero, cambioLoginModal, cargandoSesion } = useContext(ContextoSesion);
+  const { sesionInfo, loginModalAbierto, cambioLoginModal, cargandoSesion } = useContext(ContextoSesion);
   const navigate = useNavigate();
-  const fechaActual = new Date().toISOString().split("T")[0]; 
+  const fechaActual = new Date().toISOString().split("T")[0];
 
   const [nombre, setNombre] = useState('');
   const [encargado, setEncargado] = useState('');
@@ -20,6 +20,8 @@ const NuevoEvento = () => {
   const [descripcion, setDescripcion] = useState('');
   const [urlTarjeta, setUrlTarjeta] = useState('');
   const [urlHeader, setUrlHeader] = useState('');
+  const [privado, setPrivado] = useState(false);
+  const [cupos, setCupos] = useState('');
 
 
   const [mensaje, setMensaje] = useState(null);
@@ -68,7 +70,9 @@ const NuevoEvento = () => {
           id_categoria: categoria,
           encargado: encargado,
           urlImagenTarjeta: urlTarjeta,
-          urlImagenHeader: urlHeader
+          urlImagenHeader: urlHeader,
+          cupos: cupos,
+          privado: privado ? 1 : 0
         })
       });
 
@@ -88,9 +92,12 @@ const NuevoEvento = () => {
       setCategoria('1');
       setUrlTarjeta('');
       setUrlHeader('');
+      setPrivado(false);
+      setCupos('');
 
 
     } catch (err) {
+      console.error(err);
       setError("No se pudo crear el evento, intentalo mas tarde");
     } finally {
       setCargando(false);
@@ -139,16 +146,17 @@ const NuevoEvento = () => {
             placeholder='Duracion (min)'
             required
             value={duracion}
-            onChange={(e) => { const valor = e.target.value;
-              
-              if (valor === ''){
+            onChange={(e) => {
+              const valor = e.target.value;
+
+              if (valor === '') {
                 setDuracion('');
                 return;
               }
 
               const numero = parseInt(valor);
 
-              if (numero > 0 && numero <= 1440){
+              if (numero > 0 && numero <= 1440) {
                 setDuracion(valor);
               }
             }}
@@ -168,6 +176,48 @@ const NuevoEvento = () => {
             <option value="8">Desarrollo profesional</option>
             <option value="9">Religioso</option>
           </select>
+            <div className="checkbox-privado">
+              <input
+                type='checkbox'
+                id='privadoCheck'
+                checked={privado}
+                onChange={(e) => {
+
+                  setPrivado(e.target.checked);
+
+                  if (!e.target.checked) {
+                    setCupos('');
+                  }
+                }}
+                style={{ width: '20px', margin: 0, cursor: 'pointer' }}
+              />
+              <label>
+                ¿El evento es privado?
+              </label>
+            </div>
+
+            {privado && (
+              <input
+                type='number'
+                placeholder='Cupos Maximos'
+                required={privado}
+                value={cupos}
+                onChange={(e) => {
+                  const valor = e.target.value;
+
+                  if (valor === '') {
+                    setCupos('');
+                    return;
+                  }
+
+                  const numero = parseInt(valor);
+
+                  if (numero > 0) {
+                    setCupos(valor);
+                  }
+                }}
+              />
+            )}
           <textarea
             placeholder='Descripcion del evento'
             rows="3"

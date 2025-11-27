@@ -11,15 +11,18 @@ const ProponerEvento = async (req, res) => {
       id_categoria,
       urlImagenTarjeta,
       urlImagenHeader,
+      privado,
+      cupos
     } = req.body;
 
     const pool = req.db;
 
     const insertarEvento = `
       INSERT INTO EVENTO (nombre, encargado, fecha, descripcion, duracion,
-      id_categoria, id_estadoAprobacion, id_estadoRealizacion, destacado)
+      id_categoria, id_estadoAprobacion, id_estadoRealizacion, destacado, 
+      privado, cupos)
       VALUES (@nombre, @encargado, @fecha, @descripcion, @duracion, 
-      @id_categoria, 1, 1, 0);
+      @id_categoria, 1, 1, 0, @cupos, @privado);
       SELECT SCOPE_IDENTITY() AS id;
     `;
 
@@ -31,6 +34,8 @@ const ProponerEvento = async (req, res) => {
       .input("descripcion", sql.Text, descripcion)
       .input("duracion", sql.Int, duracion)
       .input("id_categoria", sql.Int, id_categoria)
+      .input("privado", sql.Bit, privado)
+      .input("cupos", sql.Int, cupos)
       .query(insertarEvento);
 
     const eventoId = resultadoEvento.recordset[0].id;
