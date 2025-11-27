@@ -17,6 +17,6 @@ rutas.get('/eventos/buscar', buscarEventos);
 rutas.get('/eventos/destacados',getEventosDestacados);
 rutas.post('/login', IniciarSesion);
 rutas.post('/registro',registrarse);
-rutas.post('/eventos/proponer', verifyToken, crearEvento);
+rutas.post('/eventos/proponer', verifyToken, ProponerEvento);
 
 export default rutas;

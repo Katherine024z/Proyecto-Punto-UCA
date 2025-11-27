@@ -1,9 +1,8 @@
 import React from "react";
-import "../styles/IconoBoton.css";
 
 function LoginBoton({ text = "Entrar", disabled = false }) {
   return (
-    <button type="submit" className="login-btn" disabled={disabled}>
+    <button type="submit" disabled={disabled}>
       <span>{disabled ? "Verificando..." : text}</span>
     </button>
   );

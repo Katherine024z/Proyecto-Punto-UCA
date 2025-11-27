@@ -1,4 +1,4 @@
-import { sql } from "../data/dbConfig";
+import { sql } from "../data/dbConfig.js";
 
 const ProponerEvento = async (req, res) => {
   try {
