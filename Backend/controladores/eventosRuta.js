@@ -14,7 +14,8 @@ const getEventos = async (req, res) => {
             `;
         
         const consulta = `
-            SELECT e.id, e.nombre, e.fecha, e.descripcion, e.duracion, e.encargado, c.categoria,e.cupos, i.URL AS imagen
+            SELECT e.id, e.nombre, e.fecha, e.descripcion, e.duracion, e.encargado, c.categoria,e.cupos, i.URL AS imagen,
+            e.privado, (SELECT COUNT(*) FROM Inscripcion WHERE id_evento = e.id) AS inscritos
             FROM Evento e
             INNER JOIN Categoria c ON e.id_categoria = c.id
             INNER JOIN Imagen i on i.id_evento = e.id

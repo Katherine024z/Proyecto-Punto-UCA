@@ -7,10 +7,20 @@ const DetalleEvento = ({ estaAbierto, cambiar, evento }) => {
   const [mensaje, setMensaje] = useState(null);
   const [tipoMensaje, setTipoMensaje] = useState("");
   const [cargando, setCargando] = useState(false);
+  const [inscritoExitoso, setInscritoExitoso] = useState(false);
 
   const { sesionInfo, cambioLoginModal } = useContext(ContextoSesion);
 
+
+  React.useEffect(() => {
+    if (estaAbierto) {
+      setInscritoExitoso(false);
+      setMensaje(null);
+    }
+  }, [estaAbierto, evento]);
+
   if (!evento) return null;
+
 
   const fechaOriginal = new Date(evento.fecha);
   const fechaFormateada = fechaOriginal.toLocaleDateString("es-ES", {
@@ -45,11 +55,18 @@ const DetalleEvento = ({ estaAbierto, cambiar, evento }) => {
       const data = await respuesta.json();
 
       if (!respuesta.ok) {
+        if (respuesta.status === 409) {
+          setInscritoExitoso(true);
+          setTipoMensaje("exito");
+          setMensaje(data.mensaje || "Ya estás inscrito");
+          return;
+        }
         throw new Error(data.mensaje || "Error al inscribirse");
       }
 
       setTipoMensaje("exito");
       setMensaje(data.mensaje);
+      setInscritoExitoso(true);
     } catch (err) {
       setTipoMensaje("error");
       setMensaje(err.message);
@@ -57,6 +74,34 @@ const DetalleEvento = ({ estaAbierto, cambiar, evento }) => {
       setCargando(false);
     }
   };
+
+  const cuposLlenos = evento?.cupos > 0 && evento?.inscritos >= evento?.cupos;
+  const esPrivado = Boolean(Number(evento?.privado));
+
+  let contenidoBoton;
+
+  if (inscritoExitoso) {
+    contenidoBoton = <Button disabled>¡Ya estás inscrito!</Button>;
+  }
+  else if (!esPrivado) {
+    contenidoBoton = <Button disabled>Evento Público</Button>;
+  }
+  else if (esPrivado && cuposLlenos) {
+    contenidoBoton = <Button disabled>Cupos llenos</Button>;
+  }
+  else {
+    contenidoBoton = (
+      <Button className="btn-inscribirse" onClick={handleInscribirse} disabled={cargando}>
+        {cargando ? (
+          <>
+            <Spinner size="sm" /> Inscribiendo...
+          </>
+        ) : (
+          "Inscribirse"
+        )}
+      </Button>
+    );
+  }
 
   const cerrarModal = () => {
     setMensaje(null);
@@ -88,7 +133,12 @@ const DetalleEvento = ({ estaAbierto, cambiar, evento }) => {
             <p>
               <span className="icono">👤</span> <strong>Encargado:</strong> {evento.encargado || "Comité UCA"}
             </p>
-            {evento.cupos > 0 && <p>Cupos totales: {evento.cupos}</p>}
+
+            {evento.cupos > 0 && (
+              <p>
+                Cupos: {evento.inscritos} / {evento.cupos}
+              </p>
+            )}
 
             <div className="tags">
               <Badge color="primary" pill className="categoria">
@@ -112,15 +162,7 @@ const DetalleEvento = ({ estaAbierto, cambiar, evento }) => {
         </div>
 
         <div className="modal-footer">
-          <Button className="btn-inscribirse" onClick={handleInscribirse} disabled={cargando}>
-            {cargando ? (
-              <>
-                <Spinner size="sm" /> Inscribiendo...
-              </>
-            ) : (
-              "Inscribirse"
-            )}
-          </Button>
+          {contenidoBoton}
         </div>
       </ModalBody>
     </Modal>
