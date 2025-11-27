@@ -4,6 +4,7 @@ const ContextoSesion = createContext(null);
 
 const GestorSesion = ({ children }) => {
 
+  const [cargandoSesion, setCargandoSesion] = useState(true);
   const [loginModalAbierto,setLoginModalAbierto] = useState(false);
   const cambioLoginModal = () => setLoginModalAbierto(!loginModalAbierto);
 
@@ -22,6 +23,8 @@ const GestorSesion = ({ children }) => {
         usuario: JSON.parse(usuario),
       });
     }
+
+    setCargandoSesion(false);
   }, []);
 
   const logout = () => {
@@ -36,7 +39,8 @@ const GestorSesion = ({ children }) => {
     logout,
     loginModalAbierto,
     setLoginModalAbierto,
-    cambioLoginModal
+    cambioLoginModal,
+    cargandoSesion
   };
 
   return <ContextoSesion.Provider value={value}>{children}</ContextoSesion.Provider>;

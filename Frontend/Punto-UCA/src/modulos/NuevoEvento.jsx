@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { ContextoSesion } from '../utilidades/contexto.jsx';
 
 import HeaderFormulario from '../componentes/HeaderFormulario.jsx';
+import { Spinner } from 'react-bootstrap';
+
 import "../styles/IconoBoton.css";
 
 const NuevoEvento = () => {
-  const  { sesionInfo, loginModalAbiero, cambioLoginModal} = useContext(ContextoSesion);
+  const  { sesionInfo, loginModalAbiero, cambioLoginModal, cargandoSesion} = useContext(ContextoSesion);
   const navigate = useNavigate();
 
   const [nombre, setNombre] = useState('');
@@ -21,13 +23,21 @@ const NuevoEvento = () => {
   const [cargando, setCargando] = useState(false);
 
   useEffect (() => {
+    
+    if(cargandoSesion) return;
+
     if (!sesionInfo.token) {
       navigate('/');
       setTimeout(() => {
         cambioLoginModal();
       }, 100);
     }
-  }, [sesionInfo.token, navigate]);
+  }, [sesionInfo.token, navigate,cargandoSesion]);
+
+  if(cargandoSesion) {return(
+    <Spinner color="primary">
+    </Spinner>
+  )};
 
   if(!sesionInfo.token) return null;
 
