@@ -22,7 +22,7 @@ const ProponerEvento = async (req, res) => {
       id_categoria, id_estadoAprobacion, id_estadoRealizacion, destacado, 
       privado, cupos)
       VALUES (@nombre, @encargado, @fecha, @descripcion, @duracion, 
-      @id_categoria, 1, 1, 0, @cupos, @privado);
+      @id_categoria, 1, 1, 0, @privado, @cupos);
       SELECT SCOPE_IDENTITY() AS id;
     `;
 
