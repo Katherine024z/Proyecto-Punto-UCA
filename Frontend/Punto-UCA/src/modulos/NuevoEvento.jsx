@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ContextoSesion } from '../utilidades/contexto.jsx';
 
-import Header from '../componentes/Header.jsx';
+import HeaderFormulario from '../componentes/HeaderFormulario.jsx';
 import "../styles/IconoBoton.css";
 
 const NuevoEvento = () => {
@@ -82,6 +82,7 @@ const NuevoEvento = () => {
 
   return (
     <>
+    <HeaderFormulario />
     <main className='form-container'>
       <h2>Proponer Evento</h2>
       <form onSubmit={handleSubmit}>
@@ -159,6 +160,11 @@ const NuevoEvento = () => {
         </button>
       </form>
     </main>
+          <footer>
+        <p>
+          &copy; 2025 Punto UCA - Universidad Centroamericana José Simeón Cañas
+        </p>
+      </footer>
     </>
   );
 };
