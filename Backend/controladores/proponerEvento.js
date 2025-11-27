@@ -20,7 +20,7 @@ const ProponerEvento = async (req, res) => {
       id_categoria, id_estadoAprobacion, id_estadoRealizacion, destacado)
       VALUES (@nombre, @encargado, @fecha, @descripcion, @duracion, 
       @id_categoria, 1, 1, 0);
-      SELECT SCOPE_IDENTITY AS id;
+      SELECT SCOPE_IDENTITY() AS id;
     `;
 
     const resultadoEvento = await pool
@@ -54,8 +54,8 @@ const ProponerEvento = async (req, res) => {
 
     res.status(201).json({ mensaje: "Evento guardado exitosamente" });
 
-  } catch {
-    console.error("Error al crear evento:", err.mensaje);
+  } catch (err){
+    console.error("Error al crear evento:", err.message);
     res.status(500).json({ mensaje: "Error en el servidor al crear al evento"});
   }
 };
