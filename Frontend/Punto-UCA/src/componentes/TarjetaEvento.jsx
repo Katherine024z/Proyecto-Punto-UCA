@@ -10,7 +10,7 @@ import {
 } from "reactstrap";
 import '../styles/TarjetaEvento.css'
 
-const EventCard = ({ nombre, fecha, categoria, descripcion, imagen}) => {
+const EventCard = ({ nombre, fecha, categoria, descripcion, imagen, onClickVermas}) => {
   const fechaOriginal = fecha ? new Date(fecha) : null;
   const fechaFormateada = fechaOriginal
     ? fechaOriginal.toLocaleDateString("es-ES", {
@@ -33,7 +33,7 @@ const EventCard = ({ nombre, fecha, categoria, descripcion, imagen}) => {
         <CardText className="categoria">
           Categoría: {categoria || "Sin Categoría"}
         </CardText>
-        <Button className="informacion-btn">Ver más</Button>
+        <Button className="informacion-btn" onClick={onClickVermas}>Ver más</Button>
       </CardBody>
     </Card>
   );

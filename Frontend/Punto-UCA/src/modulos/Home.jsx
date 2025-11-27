@@ -9,6 +9,7 @@ import TotalEventosContador from "../componentes/TotalEventosContador";
 import Header from "../componentes/Header";
 import ImagenesCarrusel from "../componentes/ImagenesCarrusel"
 import Login from "./Login";
+import DetalleEvento from "./DetalleEvento";
 
 const Home = () => {
   //variable de estado y funciones flechas
@@ -20,11 +21,24 @@ const Home = () => {
   const [totalPaginas, setTotalPaginas] = useState(0);
   const [conteoTotal, setConteoTotal] = useState(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [eventoSeleccionado, setEventoSeleccionado] = useState(null);
 
   const paginaActual = parseInt(parametrosBusqueda.get("pagina")) || 1;
   const terminoBusqueda = parametrosBusqueda.get("busqueda") || "";
 
   const EVENTOS_PAGINA = 12;
+
+  const abrirModalDetalle = (evento) => {
+    setEventoSeleccionado(evento);
+    setModalAbierto(true);
+  }
+
+  const cerrarModalDetalle = () => {
+    setModalAbierto(false);
+    setEventoSeleccionado(null);
+  }
+
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
@@ -136,6 +150,12 @@ const Home = () => {
       consulta = {terminoBusqueda}
       />
       <Login />
+      <DetalleEvento
+        estaAbierto={modalAbierto}
+        cambiar={cerrarModalDetalle}
+        evento={eventoSeleccionado}
+      />
+
       <main className="distribucion-barra">
         <CategoriasAside
           isVisible={isSidebarOpen}
@@ -154,8 +174,10 @@ const Home = () => {
           </div>
 
           <div className="grupo-tarjetas">
-            {eventos.map((e, index) => (
-              <TarjetaEvento key={index} {...e} />
+            {eventos.map((e) => (
+              <TarjetaEvento key={e.id} {...e} 
+              onClickVermas={() => abrirModalDetalle(e)}
+              />
             ))}
           </div>
           <PaginacionEventos
